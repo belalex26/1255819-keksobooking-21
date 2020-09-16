@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Александра Белова](https://up.htmlacademy.ru/javascript/21/user/1255819).
-* Наставник: [Магомед Кандаев] (https://htmlacademy.ru/profile/magomedkandaev)
+* Наставник: [Магомед Кандаев](https://htmlacademy.ru/profile/magomedkandaev)
 
 ---
 
