@@ -1,5 +1,5 @@
 'use strict';
-
+/*
 let getRandomData = function () {
   const TYPES = ["palace", "flat", "house", "bungalow"];
   const TIMES = ["12:00", "13:00", "14:00"];
@@ -8,7 +8,7 @@ let getRandomData = function () {
   let priceMax = 30000;
   let roomMax = 6;
   let guestsMax = 10;
-  let advertising = [];
+  const advertising = [];
   let countAds = 8;
 
   //случайное число
@@ -28,8 +28,14 @@ let getRandomData = function () {
   };
 
   //cлучайный массив
-  let getRandomArrayValue = function () {
+  let getRandomArrayValue = function (arr) {
     return arr[getRandomNumber(arr.length)];
+  };
+
+  let getRandomLengthArrayValues = function (arr) {
+    return arr.filter(() => {
+      return getRandomNumber(2);
+    });
   };
 
   //координаты
@@ -41,7 +47,6 @@ let getRandomData = function () {
   let getRandomCoordinateY = function () {
     const COORDINATE_Y_RANGE = 500;
     const COORDINATE_Y_OFFSET = 130;
-
     return getRandomNumber(COORDINATE_Y_RANGE, COORDINATE_Y_OFFSET);
   };
 
@@ -73,22 +78,53 @@ let getRandomData = function () {
   };
 
 return advertising;
+
 };
 
+console.log (advertising);
+
+*/
 
 
+let getRandomNumber = function (max, offset = 0) {
+  return Math.floor((Math.random() * Math.floor(max)) + offset);
+};
+
+ //координаты
+ let getRandomCoordinateX = function () {
+  let containerWidth = document.querySelector(".map").clientWidth;
+  return getRandomNumber(containerWidth + 1);
+};
+
+let getRandomCoordinateY = function () {
+  const COORDINATE_Y_RANGE = 500;
+  const COORDINATE_Y_OFFSET = 130;
+  return getRandomNumber(COORDINATE_Y_RANGE, COORDINATE_Y_OFFSET);
+};
+
+(function(){
+  let countAds = 8;
+  let ads = new Array();
+  for (var i = 1; i <= countAds; i++) {
+    let item = {
+      "author": {
+        "avatar": `img/avatars/user0${i}.png`
+      },
+      "offer": {
+        "title": `ads`,
+        "address": "${getRandomCoordinateX()}, ${getRandomCoordinateY()}",
 
 
+      }
+    }
+    ads.push(item);
+  }
+  console.log (ads);
+}) ();
 
 
-
-
-
-
-
-var mapActive = document.querySelector(".map");
-
-mapActive.addEventListener("click", function (evt) {
-  evt.preventDefault();
+(function(){
+  let mapActive = document.querySelector(".map");
   mapActive.classList.remove("map--faded");
-});
+}) ();
+
