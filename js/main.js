@@ -8,12 +8,14 @@
   const roomMax = 6;
   const guestsMax = 10;
   const countAds = 8;
+  const containerWidth = document.querySelector(".map").clientWidth;
 
 let getRandomNumber = function (max, offset = 0) {
   return Math.floor((Math.random() * Math.floor(max)) + offset);
 };
 
- //координаты
+/*
+//координаты
  let getRandomCoordinateX = function () {
   let containerWidth = document.querySelector(".map").clientWidth;
   return getRandomNumber(containerWidth + 1);
@@ -25,44 +27,37 @@ let getRandomCoordinateY = function () {
   return getRandomNumber(COORDINATE_Y_RANGE, COORDINATE_Y_OFFSET);
 };
 
+*/
+
 let getRandomArrayValue = function (arr) {
   return arr[getRandomNumber(arr.length)];
 };
 
-/*
-let getNewArr = function (arr) {
-  let newArr = arr.slice (0, arr.length - 1);
-  return newArr;
-};
-
-function shuffle(newArr) {
-  for (let i = newArr.length - 1; i > 0; i--) {
+const shuffle = function (elements) {
+  const clonedElements = elements.slice();
+  for (let i = clonedElements - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
-    [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+    [clonedElements[i], clonedElements[j]] = [clonedElements[j], clonedElements[i]];
   }
-  return newArr;
+  return clonedElements;
 }
-//тестирование
-shuffle(PHOTOS);
-console.log (PHOTOS);
-*/
 
-let getRandomLengthArrayValues = function (arr) {
-  return arr.filter(() => {
-    return getRandomNumber(2);
-  });
+const getRandomLengthArrayValues = function (elements) {
+  return shuffle(elements).slice(0, getRandomNumber(elements.length));
 };
 
 let getAds = function () {
-  let ads = new Array();
-  for (var i = 1; i <= countAds; i++) {
+  const ads = [];
+  for (let i = 1; i <= countAds; i++) {
+    var locationX = getRandomNumber(containerWidth + 1);
+    var locationY = getRandomNumber(130, 630);
     let item = {
       "author": {
         "avatar": `img/avatars/user0${i}.png`
       },
       "offer": {
         "title": `ads`,
-        "address": `${getRandomCoordinateX()}, ${getRandomCoordinateY()}`,
+        "address": locationX + `, ` + locationY,
         "price":  getRandomNumber(priceMax),
         "type": getRandomArrayValue(TYPES),
         "rooms": getRandomNumber(roomMax),
@@ -74,12 +69,14 @@ let getAds = function () {
         "photos": getRandomLengthArrayValues(PHOTOS),
     },
     "location": {
-        "x": getRandomCoordinateX(),
-        "y": getRandomCoordinateY()
+        "x": locationX,
+        "y": locationY
     }
   }
     ads.push(item);
+    return locationX, locationY;
   }
+  return ads;
 }
 
 const adDataMock = getAds();
@@ -96,9 +93,9 @@ let createPins = function () {
   const pinsFragment = document.createDocumentFragment();
   const pinTemplate = document.querySelector("#pin").content.querySelector("button");
 
-  for (let i = 1; i < countAds; i++) {
+  for (let i = 1; i <= countAds; i++) {
     const pin = pinTemplate.cloneNode(true);
-    pin.style = `left:` + `${getRandomCoordinateX()}` + `px; top:` +`${getRandomCoordinateY()}` + `px;`;
+    pin.style = `left:` + adDataMock.locationX + `px; top:` + adDataMock.locationY + `px;`;
     pin.querySelector(`img`).src = `img/avatars/user0${i}.png`;
     pin.querySelector(`img`).alt = `ads`;
     pinsFragment.appendChild(pin);
