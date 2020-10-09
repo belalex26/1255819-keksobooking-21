@@ -1,33 +1,16 @@
 'use strict';
 
-  const TYPES = ["palace", "flat", "house", "bungalow"];
-  const TIMES = ["12:00", "13:00", "14:00"];
-  const PHOTOS= ["http://o0.github.io/assets/images/tokyo/hotel1.jpg", "http://o0.github.io/assets/images/tokyo/hotel2.jpg", "http://o0.github.io/assets/images/tokyo/hotel3.jpg"];
-  const FEATURES = ["wifi", "dishwasher", "parking", "washer", "elevator", "conditioner"];
-  const priceMax = 10000;
-  const roomMax = 6;
-  const guestsMax = 10;
-  const countAds = 8;
-  const containerWidth = document.querySelector(".map").clientWidth;
+const TYPES = ["palace", "flat", "house", "bungalow"];
+const TIMES = ["12:00", "13:00", "14:00"];
+const PHOTOS= ["http://o0.github.io/assets/images/tokyo/hotel1.jpg", "http://o0.github.io/assets/images/tokyo/hotel2.jpg", "http://o0.github.io/assets/images/tokyo/hotel3.jpg"];
+const FEATURES = ["wifi", "dishwasher", "parking", "washer", "elevator", "conditioner"];
+const priceMax = 10000;
+const roomMax = 6;
+const guestsMax = 10;
+const countAds = 8;
+const containerWidth = document.querySelector(".map").clientWidth;
 
-let getRandomNumber = function (max, offset = 0) {
-  return Math.floor((Math.random() * Math.floor(max)) + offset);
-};
-
-/*
-//координаты
- let getRandomCoordinateX = function () {
-  let containerWidth = document.querySelector(".map").clientWidth;
-  return getRandomNumber(containerWidth + 1);
-};
-
-let getRandomCoordinateY = function () {
-  const COORDINATE_Y_RANGE = 500;
-  const COORDINATE_Y_OFFSET = 130;
-  return getRandomNumber(COORDINATE_Y_RANGE, COORDINATE_Y_OFFSET);
-};
-
-*/
+const getRandomNumber = (min, max) => Math.floor(min + Math.random() * (max + 1 - min));
 
 let getRandomArrayValue = function (arr) {
   return arr[getRandomNumber(arr.length)];
@@ -49,7 +32,7 @@ const getRandomLengthArrayValues = function (elements) {
 let getAds = function () {
   const ads = [];
   for (let i = 1; i <= countAds; i++) {
-    var locationX = getRandomNumber(containerWidth + 1);
+    var locationX = getRandomNumber(0, 1200);
     var locationY = getRandomNumber(130, 630);
     let item = {
       "author": {
@@ -74,7 +57,6 @@ let getAds = function () {
     }
   }
     ads.push(item);
-    return locationX, locationY;
   }
   return ads;
 }
@@ -89,19 +71,18 @@ getMapActive ();
 
 //метка
 const mapPinsBlock = document.querySelector(".map__pins");
-let createPins = function () {
+const createPins = function (ads) {
   const pinsFragment = document.createDocumentFragment();
-  const pinTemplate = document.querySelector("#pin").content.querySelector("button");
+  const pinTemplate = document.querySelector('#pin').content.querySelector('button');
 
-  for (let i = 1; i <= countAds; i++) {
+  for (let i = 0; i < ads.length; i++) {
     const pin = pinTemplate.cloneNode(true);
-    pin.style = `left:` + adDataMock.locationX + `px; top:` + adDataMock.locationY + `px;`;
-    pin.querySelector(`img`).src = `img/avatars/user0${i}.png`;
-    pin.querySelector(`img`).alt = `ads`;
+    pin.style = `left:` + (ads[i].location.x - 25) + `px; top:` + (ads[i].location.y - 70) + `px;`;
+    pin.querySelector(`img`).src = ads[i].author.avatar;
+    pin.querySelector(`img`).alt = ads[i].offer.description;
     pinsFragment.appendChild(pin);
   }
-
   mapPinsBlock.appendChild(pinsFragment);
-}
+};
 createPins(adDataMock);
 
