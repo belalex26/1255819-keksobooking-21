@@ -9,6 +9,7 @@ const roomMax = 6;
 const guestsMax = 10;
 const countAds = 8;
 const containerWidth = document.querySelector(".map").clientWidth;
+const mainPin = document.querySelector(`.map__pin--main`);
 
 const getRandomNumber = (min, max) => Math.floor(min + Math.random() * (max + 1 - min));
 
@@ -61,16 +62,18 @@ let getAds = function () {
   return ads;
 }
 
+//
 const adDataMock = getAds();
+
 
 const getMapActive = function () {
   let mapActive = document.querySelector(".map");
   mapActive.classList.remove("map--faded");
 }
-getMapActive ();
 
 //метка
 const mapPinsBlock = document.querySelector(".map__pins");
+
 const createPins = function (ads) {
   const pinsFragment = document.createDocumentFragment();
   const pinTemplate = document.querySelector('#pin').content.querySelector('button');
@@ -84,5 +87,36 @@ const createPins = function (ads) {
   }
   mapPinsBlock.appendChild(pinsFragment);
 };
-createPins(adDataMock);
+//createPins(adDataMock);
 
+// отключение формы
+
+const formTurnOff = function () {
+  let fieldsets = document.getElementsByTagName('fieldset');
+  for (let i = 0; i < fieldsets.length; i++ ){
+    fieldsets[i].disabled = true;
+  }
+}
+formTurnOff ();
+
+//активация карты
+const formTurnOn = function formTurnOn () {
+  let fieldsets = document.getElementsByTagName('fieldset');
+  for (let i = 0; i < fieldsets.length; i++ ){
+    fieldsets[i].disabled = false;
+  }
+}
+
+const getActivePages = function () {
+  getMapActive();
+  formTurnOn();
+  createPins(adDataMock);
+}
+
+mainPin.addEventListener('mousedown', function () {
+  getActivePages();
+});
+
+mainPin.addEventListener(`keydown`, function (e) {
+  getActivePages();
+});
