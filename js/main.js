@@ -11,11 +11,13 @@ const countAds = 8;
 const mainPin = document.querySelector(`.map__pin--main`);
 const mainForm = document.querySelector(`.ad-form`);
 const addressData = document.querySelector(`#address`);
-const PIN_HEIGHT = 20;
+const mapActive = document.querySelector(`.map`);
+const fieldsets = document.getElementsByTagName(`fieldset`);
+const PIN_WIDTH = 65;
 
 const getRandomNumber = (min, max) => Math.floor(min + Math.random() * (max + 1 - min));
 
-let getRandomArrayValue = function (arr) {
+const getRandomArrayValue = function (arr) {
   return arr[getRandomNumber(arr.length)];
 };
 
@@ -32,12 +34,12 @@ const getRandomLengthArrayValues = function (elements) {
   return shuffle(elements).slice(0, getRandomNumber(elements.length));
 };
 
-let getAds = function () {
+const getAds = function () {
   const ads = [];
   for (let i = 1; i <= countAds; i++) {
-    let locationX = getRandomNumber(0, 1200);
-    let locationY = getRandomNumber(130, 630);
-    let item = {
+    const locationX = getRandomNumber(0, 1200);
+    const locationY = getRandomNumber(130, 630);
+    const item = {
       "author": {
         "avatar": `img/avatars/user0${i}.png`
       },
@@ -67,7 +69,6 @@ let getAds = function () {
 const adDataMock = getAds();
 
 const getMapActive = function () {
-  let mapActive = document.querySelector(`.map`);
   mapActive.classList.remove(`map--faded`);
 };
 
@@ -91,72 +92,59 @@ const createPins = function (ads) {
 // отключение формы
 
 const formTurnOff = function () {
-  let fieldsets = document.getElementsByTagName(`fieldset`);
   for (let i = 0; i < fieldsets.length; i++) {
     fieldsets[i].disabled = true;
   }
 };
 
 // адрес
-const getAddress = function (offset) {
-  let top = Number(mainPin.style.top.slice(0, 3));
-  let left = mainPin.style.left.slice(0, 3);
-  let adress = top + offset + ` / ` + left;
-  addressData.value = adress;
+
+const getAddress = function (pinHeight) {
+  addressData.value = parseInt(mainPin.style.left, 10) + PIN_WIDTH / 2 + `, ` + (parseInt(mainPin.style.top, 10) + pinHeight);
 };
 
 // активация карты
+
 const formTurnOn = function formTurnOn() {
-  let fieldsets = document.getElementsByTagName(`fieldset`);
   for (let i = 0; i < fieldsets.length; i++) {
     fieldsets[i].disabled = false;
   }
 };
 
-const mouseClick = function () {
-  mainPin.addEventListener(`mousedown`, function (e) {
-    if (e.button === 0) {
+// обработчики
+
+const onMainPinMouseDown = function(evt) {
+  const leftButtonMouseDown = 0;
+  if (evt.button === leftButtonMouseDown) {
+    getActivePages();
+  }
+}
+
+  const onMainPinKeyDown = function(evt) {
+    if (evt.key === `Enter`) {
       getActivePages();
-      getAddress(PIN_HEIGHT);
     }
-  });
-};
-
-const mouseClickRemove = function () {
-  mainPin.removeEventListener(`mousedown`, function () {});
-};
-
-const buttonClick = function () {
-  mainPin.addEventListener(`keydown`, function (e) {
-    if (e.keyCode === 13) {
-      getActivePages();
-      getAddress(PIN_HEIGHT);
-    }
-  });
-};
-
-const buttonClickRemove = function () {
-  mainPin.removeEventListener(`keydown`, function () {});
-};
+  }
 
 const getDisablePages = function () {
-  getAddress(0);
+  getAddress(65);
   formTurnOff();
-  mouseClick();
-  buttonClick();
+  mainPin.addEventListener(`mousedown`, onMainPinMouseDown);
+  mainPin.addEventListener(`keydown`, onMainPinKeyDown);
 };
 
 getDisablePages();
 
 const getActivePages = function () {
   mainForm.classList.remove(`ad-form--disabled`);
-  mouseClickRemove();
-  buttonClickRemove();
+  getAddress(84);
   getMapActive();
   formTurnOn();
   createPins(adDataMock);
+  mainPin.removeEventListener(`mousedown`, onMainPinMouseDown);
+  mainPin.removeEventListener(`keydown`, onMainPinKeyDown);
 };
-
+/*
 const propertyType = document.querySelector(`#type`);
 const propertyPrice = document.querySelector(`#price`);
 
@@ -177,7 +165,9 @@ const selectPrice = function () {
 };
 
 propertyType.addEventListener(`change`, selectPrice);
+*/
 
+// проверка по количеству комнат
 const RoomGuestRation = {
   1: [1],
   2: [1, 2],
