@@ -8,12 +8,6 @@ const priceMax = 10000;
 const roomMax = 6;
 const guestsMax = 10;
 const countAds = 8;
-const mainPin = document.querySelector(`.map__pin--main`);
-const mainForm = document.querySelector(`.ad-form`);
-const addressData = document.querySelector(`#address`);
-const mapActive = document.querySelector(`.map`);
-const fieldsets = document.getElementsByTagName(`fieldset`);
-const PIN_WIDTH = 65;
 
 const getRandomNumber = (min, max) => Math.floor(min + Math.random() * (max + 1 - min));
 
@@ -73,6 +67,7 @@ const getMapActive = function () {
 };
 
 // метка
+
 const mapPinsBlock = document.querySelector(`.map__pins`);
 
 const createPins = function (ads) {
@@ -91,6 +86,17 @@ const createPins = function (ads) {
 
 // отключение формы
 
+const mainPin = document.querySelector(`.map__pin--main`);
+const mainForm = document.querySelector(`.ad-form`);
+const addressData = document.querySelector(`#address`);
+const mapActive = document.querySelector(`.map`);
+const fieldsets = document.getElementsByTagName(`fieldset`);
+const PIN_WIDTH = 65;
+const PIN_HEIGTH_DISABLE = 65;
+const leftButtonMouseDown = 0;
+const heightPinDisable = PIN_HEIGTH_DISABLE / 2;
+const heightPinActve = 84;
+
 const formTurnOff = function () {
   for (let i = 0; i < fieldsets.length; i++) {
     fieldsets[i].disabled = true;
@@ -100,7 +106,7 @@ const formTurnOff = function () {
 // адрес
 
 const getAddress = function (pinHeight) {
-  addressData.value = parseInt(mainPin.style.left, 10) + PIN_WIDTH / 2 + `, ` + (parseInt(mainPin.style.top, 10) + pinHeight);
+  addressData.value = Math.floor(parseInt(mainPin.style.left, 10) + PIN_WIDTH / 2) + `, ` + Math.floor((parseInt(mainPin.style.top, 10) + pinHeight));
 };
 
 // активация карты
@@ -113,37 +119,38 @@ const formTurnOn = function formTurnOn() {
 
 // обработчики
 
-const onMainPinMouseDown = function(evt) {
-  const leftButtonMouseDown = 0;
+const onMainPinMouseDown = function (evt) {
   if (evt.button === leftButtonMouseDown) {
     getActivePages();
   }
-}
+};
 
-  const onMainPinKeyDown = function(evt) {
-    if (evt.key === `Enter`) {
-      getActivePages();
-    }
+const onMainPinKeyDown = function (evt) {
+  if (evt.key === `Enter`) {
+    getActivePages();
   }
+};
 
 const getDisablePages = function () {
-  getAddress(65);
+  getAddress(heightPinDisable);
   formTurnOff();
   mainPin.addEventListener(`mousedown`, onMainPinMouseDown);
   mainPin.addEventListener(`keydown`, onMainPinKeyDown);
 };
 
-getDisablePages();
-
 const getActivePages = function () {
   mainForm.classList.remove(`ad-form--disabled`);
-  getAddress(84);
+  getAddress(heightPinActve);
   getMapActive();
   formTurnOn();
   createPins(adDataMock);
   mainPin.removeEventListener(`mousedown`, onMainPinMouseDown);
   mainPin.removeEventListener(`keydown`, onMainPinKeyDown);
 };
+
+getDisablePages();
+
+// валидация
 /*
 const propertyType = document.querySelector(`#type`);
 const propertyPrice = document.querySelector(`#price`);
@@ -168,7 +175,7 @@ propertyType.addEventListener(`change`, selectPrice);
 */
 
 // проверка по количеству комнат
-const RoomGuestRation = {
+const roomGuestRation = {
   1: [1],
   2: [1, 2],
   3: [1, 2, 3],
@@ -180,7 +187,7 @@ const capacitySelect = document.querySelector(`#capacity`);
 const submitBtn = document.querySelector(`.ad-form__submit`);
 
 const checkPlaceValidity = function () {
-  const roomGuests = RoomGuestRation[roomNumberSelect.value];
+  const roomGuests = roomGuestRation[roomNumberSelect.value];
   const message = roomGuests.indexOf(+capacitySelect.value) === -1 ? `Это количество гостей сюда не поместится` : ``;
   capacitySelect.setCustomValidity(message);
 };
@@ -189,12 +196,12 @@ const onSubmitBtnClick = function () {
   checkPlaceValidity();
 };
 
-const disableСapacityOptions = function (inputValue) {
+const disableCapacityOptions = function (inputValue) {
   const capacityOptions = capacitySelect.querySelectorAll(`option`);
   capacityOptions.forEach(function (it) {
     it.disabled = true;
   });
-  RoomGuestRation[inputValue].forEach(function (it) {
+  roomGuestRation[inputValue].forEach(function (it) {
     capacitySelect.querySelector(`option` + `[value="` + it + `"]`).disabled = false;
     capacitySelect.value = it;
   });
@@ -202,7 +209,7 @@ const disableСapacityOptions = function (inputValue) {
 
 const onRoomNumberSelectChange = function (evt) {
   evt.target.setCustomValidity(``);
-  disableСapacityOptions(roomNumberSelect.value);
+  disableCapacityOptions(roomNumberSelect.value);
 };
 
 roomNumberSelect.addEventListener(`change`, onRoomNumberSelectChange);
