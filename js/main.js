@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  const adDataMock = window.getAds();
+  // const adDataMock = window.getAds();
   const mainPin = document.querySelector(`.map__pin--main`);
   const mainForm = document.querySelector(`.ad-form`);
   const PIN_HEIGTH_DISABLE = 65;
@@ -35,7 +35,7 @@
     window.pin.getAddress(heightPinActve);
     window.getMapActive();
     window.form.formTurnOn();
-    window.pin.createPins(adDataMock);
+    // window.pin.createPins(adDataMock);
     mainPin.removeEventListener(`mousedown`, onMainPinMouseDown);
     mainPin.removeEventListener(`keydown`, onMainPinKeyDown);
   };
