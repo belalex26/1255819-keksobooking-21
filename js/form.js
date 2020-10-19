@@ -3,18 +3,15 @@
 (function () {
   const fieldsets = document.getElementsByTagName(`fieldset`);
 
+  const formTurnOff = function () {
+    for (let i = 0; i < fieldsets.length; i++) {
+      fieldsets[i].disabled = true;
+    }
+  };
 
-  window.form = {
-    formTurnOff() {
-      for (let i = 0; i < fieldsets.length; i++) {
-        fieldsets[i].disabled = true;
-      }
-    },
-
-    formTurnOn: function formTurnOn() {
-      for (let i = 0; i < fieldsets.length; i++) {
-        fieldsets[i].disabled = false;
-      }
+  const formTurnOn = function () {
+    for (let i = 0; i < fieldsets.length; i++) {
+      fieldsets[i].disabled = false;
     }
   };
 
@@ -82,4 +79,9 @@ propertyType.addEventListener(`change`, selectPrice);
   roomNumberSelect.addEventListener(`change`, onRoomNumberSelectChange);
   submitBtn.addEventListener(`click`, onSubmitBtnClick);
 
+  window.form = {
+    formTurnOff,
+    formTurnOn
+  };
 })();
+
