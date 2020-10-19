@@ -19,10 +19,19 @@
     },
 
     getAddress(pinHeight) {
-      const PIN_WIDTH = 65;
       const mainPin = document.querySelector(`.map__pin--main`);
       const addressData = document.querySelector(`#address`);
-      addressData.value = Math.floor(parseInt(mainPin.style.left, 10) + PIN_WIDTH / 2) + `, ` + Math.floor((parseInt(mainPin.style.top, 10) + pinHeight));
+      addressData.value = Math.floor(parseInt(mainPin.style.left, 10) + window.util.PIN_WIDTH / 2) + `, ` + Math.floor((parseInt(mainPin.style.top, 10) + pinHeight));
+    },
+
+    onRenderPinsLoadSuccess(pin) {
+      const fragment = document.createDocumentFragment();
+      const PinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
+      const PIN_NUMBERS = 8;
+      for (let i = 0; i < PIN_NUMBERS; i++) {
+        fragment.appendChild(window.pin.createPins(PinTemplate, pin[i]));
+      }
+      mapPinsBlock.appendChild(fragment);
     }
   };
 })();
