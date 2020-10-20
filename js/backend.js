@@ -1,38 +1,48 @@
 'use strict';
 
 (function () {
-  const TIMEOUT_IN_MS = 10000;
-  const StatusCode = {
-    OK: 200
-  };
-  const URL = {
-    DOWNLOAD: `https://21.javascript.pages.academy/keksobooking/data`,
-  };
-
-  window.backend = {
-    load(onSuccess, onError) {
-      const xhr = new XMLHttpRequest();
-      xhr.responseType = `json`;
-      xhr.open(`GET`, URL);
-
-      xhr.addEventListener(`load`, function () {
-        if (xhr.status === StatusCode.OK) {
+  window.backend = function (onSuccess, onError) {
+    const xhr = new XMLHttpRequest();
+    const url = `https://21.javascript.pages.academy/keksobooking/data`;
+    xhr.responseType = `json`;
+    xhr.timeout = 10000; // 10s
+    xhr.addEventListener(`load`, function () {
+      let error;
+      switch (xhr.status) {
+        case 200:
           onSuccess(xhr.response);
-        } else {
-          onError(`Статус ответа: ` + xhr.status + ` ` + xhr.statusText);
-        }
-      });
-      xhr.addEventListener(`error`, () => {
-        onError(`Ошибка соединения`);
+          break;
+
+        case 400:
+          error = `Неверный запрос`;
+          break;
+        case 401:
+          error = `Пользователь не авторизован`;
+          break;
+        case 404:
+          error = `Ничего не найдено`;
+          break;
+
+        default:
+          error = `Cтатус ответа: : ` + xhr.status + ` ` + xhr.statusText;
+      }
+
+      if (error) {
+        onError(error);
+      }
+    });
+
+    xhr.addEventListener(`load`, function () {
+      xhr.addEventListener(`error`, function () {
+        onError(`Произошла ошибка соединения`);
       });
 
-      xhr.addEventListener(`timeout`, () => {
+      xhr.addEventListener(`timeout`, function () {
         onError(`Запрос не успел выполниться за ` + xhr.timeout + `мс`);
       });
-      xhr.timeout = TIMEOUT_IN_MS;
 
-      xhr.open(`GET`, URL.DOWNLOAD);
+      xhr.open(`GET`, url);
       xhr.send();
-    }
+    });
   };
 })();

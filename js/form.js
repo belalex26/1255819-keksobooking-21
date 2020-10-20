@@ -3,20 +3,18 @@
 (function () {
   const fieldsets = document.getElementsByTagName(`fieldset`);
 
-
-  window.form = {
-    formTurnOff() {
-      for (let i = 0; i < fieldsets.length; i++) {
-        fieldsets[i].disabled = true;
-      }
-    },
-
-    formTurnOn: function formTurnOn() {
-      for (let i = 0; i < fieldsets.length; i++) {
-        fieldsets[i].disabled = false;
-      }
+  const formTurnOff = function () {
+    for (let i = 0; i < fieldsets.length; i++) {
+      fieldsets[i].disabled = true;
     }
   };
+
+  const formTurnOn = function () {
+    for (let i = 0; i < fieldsets.length; i++) {
+      fieldsets[i].disabled = false;
+    }
+  };
+
 
   /* валидация
 const propertyType = document.querySelector(`#type`);
@@ -82,4 +80,8 @@ propertyType.addEventListener(`change`, selectPrice);
   roomNumberSelect.addEventListener(`change`, onRoomNumberSelectChange);
   submitBtn.addEventListener(`click`, onSubmitBtnClick);
 
+  window.form = {
+    formTurnOff,
+    formTurnOn
+  };
 })();
