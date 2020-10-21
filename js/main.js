@@ -24,18 +24,18 @@
   };
 
   const getDisablePages = function () {
-    window.pin.getAddress(heightPinDisable);
-    window.form.formTurnOff();
+    window.pin.address(heightPinDisable);
+    window.form.turnOff();
     mainPin.addEventListener(`mousedown`, onMainPinMouseDown);
     mainPin.addEventListener(`keydown`, onMainPinKeyDown);
   };
 
   const getActivePages = function () {
     mainForm.classList.remove(`ad-form--disabled`);
-    window.pin.getAddress(heightPinActve);
+    window.pin.address(heightPinActve);
     window.getMapActive();
-    window.form.formTurnOn();
-    window.pin.createPins(adDataMock);
+    window.form.turnOn();
+    window.pin.createPin(adDataMock);
     mainPin.removeEventListener(`mousedown`, onMainPinMouseDown);
     mainPin.removeEventListener(`keydown`, onMainPinKeyDown);
   };

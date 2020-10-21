@@ -25,8 +25,8 @@
   };
 
   window.pin = {
-    createPins,
-    getAddress
+    createPin: createPins,
+    address: getAddress
   };
 })();
 
