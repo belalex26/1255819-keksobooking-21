@@ -4,14 +4,11 @@
   // const adDataMock = window.getAds();
   const mainPin = document.querySelector(`.map__pin--main`);
   const mainForm = document.querySelector(`.ad-form`);
-  // const PIN_HEIGTH_DISABLE = 65;
-  // const heightPinDisable = PIN_HEIGTH_DISABLE / 2;
-  // const heightPinActve = 84;
   const leftButtonMouseDown = 0;
 
   // блок с ошибкой
 
-  const ShowError = function (errorMessage) {
+  const onLoadError = function (errorMessage) {
     const element = document.createElement(`div`);
 
     element.style.left = 0;
@@ -37,20 +34,25 @@
     }
   };
 
+  // создание метки
+  const getPin = function () {
+    window.pin.createPin();
+  };
+
   const getDisablePages = function () {
-    window.pin.getAddress(window.util.PIN_HEIGTH_DISABLE);
-    window.form.formTurnOff();
+    window.pin.address(window.util.PIN_HEIGTH_DISABLE);
+    window.form.turnOff();
     mainPin.addEventListener(`mousedown`, onMainPinMouseDown);
     mainPin.addEventListener(`keydown`, onMainPinKeyDown);
   };
 
   const getActivePages = function () {
     mainForm.classList.remove(`ad-form--disabled`);
-    window.pin.getAddress(window.util.heightPinActve);
+    window.pin.address(window.util.PIN_HEIGTH_ACTIVE);
     window.getMapActive();
-    window.form.formTurnOn();
+    window.form.turnOn();
     // window.pin.createPins(adDataMock);
-    window.backend(window.pin.onRenderPinsLoadSuccess, ShowError);
+    window.backend.load(getPin, onLoadError);
     mainPin.removeEventListener(`mousedown`, onMainPinMouseDown);
     mainPin.removeEventListener(`keydown`, onMainPinKeyDown);
   };

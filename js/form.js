@@ -81,7 +81,7 @@ propertyType.addEventListener(`change`, selectPrice);
   submitBtn.addEventListener(`click`, onSubmitBtnClick);
 
   window.form = {
-    formTurnOff,
-    formTurnOn
+    turnOff: formTurnOff,
+    turnOn: formTurnOn
   };
 })();

@@ -1,9 +1,9 @@
 'use strict';
 
 (function () {
-  window.backend = function (onSuccess, onError) {
+  const url = `https://21.javascript.pages.academy/keksobooking/data`;
+  const getload = function (onSuccess, onError) {
     const xhr = new XMLHttpRequest();
-    const url = `https://21.javascript.pages.academy/keksobooking/data`;
     xhr.responseType = `json`;
     xhr.timeout = 10000; // 10s
     xhr.addEventListener(`load`, function () {
@@ -44,5 +44,10 @@
       xhr.open(`GET`, url);
       xhr.send();
     });
+
+  };
+
+  window.backend = {
+    load: getload
   };
 })();

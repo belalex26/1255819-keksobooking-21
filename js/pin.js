@@ -1,9 +1,7 @@
 "use strict";
 // метка
 (function () {
-  const mapPinsBlock = document.querySelector(`.map__pins`);
-  const PIN_COUNT = 8;
-
+/*
   const createMapPin = function (template, content) {
     const mapPinElement = template.cloneNode(true);
     mapPinElement.firstChild.src = content.author.avatar;
@@ -14,32 +12,10 @@
       window.renderCard(content);
     });
     return mapPinElement;
-  };
+  };*/
 
-  const onRenderPinsLoadSuccess = function (pin) {
-    const fragment = document.createDocumentFragment();
-    const mapPinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
-    for (let i = 0; i < PIN_COUNT; i++) {
-      fragment.appendChild(createMapPin(mapPinTemplate, pin[i]));
-    }
-    mapPinsBlock.appendChild(fragment);
-  };
+  const mapPinsBlock = document.querySelector(`.map__pins`);
 
-  const getAddress = function (pinHeight) {
-    const mainPin = document.querySelector(`.map__pin--main`);
-    const addressData = document.querySelector(`#address`);
-    addressData.value = Math.floor(parseInt(mainPin.style.left, 10) + window.util.PIN_WIDTH / 2) + `, ` + Math.floor((parseInt(mainPin.style.top, 10) + pinHeight));
-  };
-
-  window.pin = {
-    createMapPin,
-    onRenderPinsLoadSuccess,
-    getAddress
-  };
-})();
-
-
-/*
   const createPins = function (ads) {
     const pinsFragment = document.createDocumentFragment();
     const pinTemplate = document.querySelector(`#pin`).content.querySelector(`button`);
@@ -60,20 +36,8 @@
     addressData.value = Math.floor(parseInt(mainPin.style.left, 10) + window.util.PIN_WIDTH / 2) + `, ` + Math.floor((parseInt(mainPin.style.top, 10) + pinHeight));
   };
 
-  const onRenderPinsLoadSuccess = function (pin) {
-    const fragment = document.createDocumentFragment();
-    const PinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
-    const PIN_COUNT = 8;
-    for (let i = 0; i < PIN_COUNT; i++) {
-      fragment.appendChild(window.pin.createPins(PinTemplate, pin[i]));
-    }
-    mapPinsBlock.appendChild(fragment);
-  };
   window.pin = {
-    createPins,
-    getAddress,
-    onRenderPinsLoadSuccess
+    createPin: createPins,
+    address: getAddress
   };
 })();
-
-*/
