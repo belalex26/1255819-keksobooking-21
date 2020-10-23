@@ -24,7 +24,7 @@
   };
 
   const getDisablePages = function () {
-    window.pin.address(heightPinDisable);
+    window.pin.getAddress(heightPinDisable);
     window.form.turnOff();
     mainPin.addEventListener(`mousedown`, onMainPinMouseDown);
     mainPin.addEventListener(`keydown`, onMainPinKeyDown);
@@ -32,10 +32,10 @@
 
   const getActivePages = function () {
     mainForm.classList.remove(`ad-form--disabled`);
-    window.pin.address(heightPinActve);
+    window.pin.getAddress(heightPinActve);
     window.getMapActive();
     window.form.turnOn();
-    window.pin.createPin(adDataMock);
+    window.pin.createPins(adDataMock);
     mainPin.removeEventListener(`mousedown`, onMainPinMouseDown);
     mainPin.removeEventListener(`keydown`, onMainPinKeyDown);
   };
