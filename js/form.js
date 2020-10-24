@@ -85,3 +85,4 @@ propertyType.addEventListener(`change`, selectPrice);
     turnOn: formTurnOn
   };
 })();
+

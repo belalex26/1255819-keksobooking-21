@@ -42,6 +42,7 @@
 
   const getDisablePages = function () {
     window.pin.getAddress(window.util.PIN_HEIGTH_DISABLE);
+
     window.form.turnOff();
     mainPin.addEventListener(`mousedown`, onMainPinMouseDown);
     mainPin.addEventListener(`keydown`, onMainPinKeyDown);
@@ -54,6 +55,7 @@
     window.form.turnOn();
     // window.pin.createPins(adDataMock);
     window.backend.load(drawPins, onLoadError);
+
     mainPin.removeEventListener(`mousedown`, onMainPinMouseDown);
     mainPin.removeEventListener(`keydown`, onMainPinKeyDown);
   };
