@@ -3,7 +3,6 @@
 (function () {
 
   const mapPinsBlock = document.querySelector(`.map__pins`);
-  
   const createPins = function (ads) {
     const pinsFragment = document.createDocumentFragment();
     const pinTemplate = document.querySelector(`#pin`).content.querySelector(`button`);
