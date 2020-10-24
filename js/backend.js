@@ -6,7 +6,7 @@
   };
   const TIMEOUT_IN_MS = 10000;
 
-  window.load = function (onSuccess, onError) {
+  const getload = function (onSuccess, onError) {
     const xhr = new XMLHttpRequest();
     xhr.responseType = `json`;
 
@@ -28,5 +28,9 @@
 
     xhr.open(`GET`, URL);
     xhr.send();
+  };
+
+  window.backend = {
+    load: getload
   };
 })();

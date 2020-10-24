@@ -53,7 +53,7 @@
     window.getMapActive();
     window.form.turnOn();
     // window.pin.createPins(adDataMock);
-    window.load(drawPins, onLoadError);
+    window.backend.load(drawPins, onLoadError);
     mainPin.removeEventListener(`mousedown`, onMainPinMouseDown);
     mainPin.removeEventListener(`keydown`, onMainPinKeyDown);
   };
