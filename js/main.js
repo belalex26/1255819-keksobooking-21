@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  // const adDataMock = window.getAds();
   const mainPin = document.querySelector(`.map__pin--main`);
   const mainForm = document.querySelector(`.ad-form`);
   const leftButtonMouseDown = 0;
@@ -20,6 +19,11 @@
     document.body.insertAdjacentElement(`afterbegin`, element);
   };
 
+  // создание метки
+  const onLoadSuccess = function (ads) {
+    window.pin.createPins(ads);
+  };
+
   // обработчики
 
   const onMainPinMouseDown = function (evt) {
@@ -34,11 +38,6 @@
     }
   };
 
-  // создание метки
-  const drawPins = function (ads) {
-    const adsData = window.pin.createPins(ads);
-    return adsData;
-  };
 
   const getDisablePages = function () {
     window.pin.getAddress(window.util.PIN_HEIGTH_DISABLE);
@@ -52,8 +51,7 @@
     window.pin.getAddress(window.util.PIN_HEIGTH_ACTIVE);
     window.getMapActive();
     window.form.turnOn();
-    // window.pin.createPins(adDataMock);
-    window.backend.load(drawPins, onLoadError);
+    window.backend.load(onLoadSuccess, onLoadError);
     mainPin.removeEventListener(`mousedown`, onMainPinMouseDown);
     mainPin.removeEventListener(`keydown`, onMainPinKeyDown);
   };
