@@ -35,12 +35,13 @@
   };
 
   // создание метки
-  const getPin = function () {
-    window.pin.createPin();
+  const drawPins = function (ads) {
+    const adsData = window.pin.createPins(ads);
+    return adsData;
   };
 
   const getDisablePages = function () {
-    window.pin.address(window.util.PIN_HEIGTH_DISABLE);
+    window.pin.getAddress(window.util.PIN_HEIGTH_DISABLE);
     window.form.turnOff();
     mainPin.addEventListener(`mousedown`, onMainPinMouseDown);
     mainPin.addEventListener(`keydown`, onMainPinKeyDown);
@@ -48,11 +49,11 @@
 
   const getActivePages = function () {
     mainForm.classList.remove(`ad-form--disabled`);
-    window.pin.address(window.util.PIN_HEIGTH_ACTIVE);
+    window.pin.getAddress(window.util.PIN_HEIGTH_ACTIVE);
     window.getMapActive();
     window.form.turnOn();
     // window.pin.createPins(adDataMock);
-    window.backend.load(getPin, onLoadError);
+    window.load(drawPins, onLoadError);
     mainPin.removeEventListener(`mousedown`, onMainPinMouseDown);
     mainPin.removeEventListener(`keydown`, onMainPinKeyDown);
   };
