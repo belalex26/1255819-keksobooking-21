@@ -15,6 +15,7 @@
     }
   };
 
+
   /* валидация
 const propertyType = document.querySelector(`#type`);
 const propertyPrice = document.querySelector(`#price`);
