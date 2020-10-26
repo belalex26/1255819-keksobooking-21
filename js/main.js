@@ -21,7 +21,7 @@
 
   // создание метки
   const onLoadSuccess = function (ads) {
-    window.pin.createPins(ads);
+    window.filter.onLoadDataSuccess(ads);
   };
 
   // обработчики
