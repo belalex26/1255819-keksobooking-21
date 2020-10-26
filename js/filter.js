@@ -1,9 +1,10 @@
 'use strict';
 
 (function () {
+  const MAX_COUNT = 5;
   const mapFilterForm = document.querySelector(`.map__filters`);
   const housingTypeFilterElement = mapFilterForm.querySelector(`#housing-type`);
-  const MAX_COUNT = 5;
+  const mapFilters = document.querySelector(`.map__filters-container`);
 
   const getTypeFilter = function (data) {
     return (housingTypeFilterElement.value !== `any`) ? housingTypeFilterElement.value === data.offer.type : true;
@@ -15,18 +16,23 @@
     }).slice(0, MAX_COUNT);
   };
 
-  const onLoadDataSuccess = function (data) {
-    window.DATA = data;
-    window.pin.createPins(applyAll(window.DATA));
+  const loadData = function (data) {
+    window.dataAds = data;
+    window.pin.createPins(applyAll(window.dataAds));
   };
 
   housingTypeFilterElement.addEventListener(`change`, () =>{
     window.pin.deletePins();
-    window.pin.createPins(applyAll(window.DATA));
+    window.pin.createPins(applyAll(window.dataAds));
   });
 
+  const hideFormIfError = function () {
+    mapFilters.style.display = `none`;
+  };
+
   window.filter = {
-    onLoadDataSuccess: onLoadDataSuccess
+    loadData: loadData,
+    hideFormIfError: hideFormIfError
   };
 
 })();

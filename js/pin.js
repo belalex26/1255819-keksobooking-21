@@ -3,7 +3,7 @@
 (function () {
 
   const mapPinsBlock = document.querySelector(`.map__pins`);
-  window.DATA = [];
+  window.dataAds = [];
 
   const createPins = function (ads) {
     const pinsFragment = document.createDocumentFragment();

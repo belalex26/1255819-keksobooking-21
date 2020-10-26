@@ -15,14 +15,18 @@
         onSuccess(xhr.response);
       } else {
         onError(`Статус ответа: ` + xhr.status + ` ` + xhr.statusText);
+        window.filter.hideFormIfError();
       }
     });
     xhr.addEventListener(`error`, function () {
       onError(`Произошла ошибка соединения`);
+      window.filter.hideFormIfError();
     });
     xhr.addEventListener(`timeout`, function () {
       onError(`Запрос не успел выполниться за ` + xhr.timeout + ` мс`);
+      window.filter.hideFormIfError();
     });
+
 
     xhr.timeout = TIMEOUT_IN_MS;
 
