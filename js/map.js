@@ -7,7 +7,29 @@
     mapActive.classList.remove(`map--faded`);
   };
 
-  const renderCard = function (data) {
+  const closeCard = function () {
+    const cardElement = mapActive.querySelector(`.map__card`);
+    if (cardElement) {
+      mapActive.removeChild(cardElement);
+      document.removeEventListener(`keydown`, onCardEscPress);
+    }
+  };
+
+  const onCardEnterPress = function (evt) {
+    if (evt.key === `Enter`) {
+      evt.preventDefault();
+      closeCard();
+    }
+  };
+
+  const onCardEscPress = function (evt) {
+    if (evt.key === `Escape`) {
+      evt.preventDefault();
+      closeCard();
+    }
+  };
+
+  const renderCard = (data) => {
     const card = document.querySelector(`.map__card`);
     if (card) {
       card.remove();
@@ -15,8 +37,11 @@
     mapActive.appendChild(window.createCard(data));
   };
 
+
   window.map = {
     getMapActive: getMapActive,
-    renderCard: renderCard
+    renderCard: renderCard,
+    onCardEnterPress: onCardEnterPress,
+    onCardEscPress: onCardEscPress
   };
 })();
