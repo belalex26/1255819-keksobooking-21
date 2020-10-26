@@ -3,7 +3,20 @@
 (function () {
   const mapActive = document.querySelector(`.map`);
 
-  window.getMapActive = function () {
+  const getMapActive = function () {
     mapActive.classList.remove(`map--faded`);
+  };
+
+  const renderCard = function (data) {
+    const card = document.querySelector(`.map__card`);
+    if (card) {
+      card.remove();
+    }
+    mapActive.appendChild(window.createCard(data));
+  };
+
+  window.map = {
+    getMapActive: getMapActive,
+    renderCard: renderCard
   };
 })();

@@ -3,6 +3,7 @@
 (function () {
 
   const mapPinsBlock = document.querySelector(`.map__pins`);
+
   const createPins = function (ads) {
     const pinsFragment = document.createDocumentFragment();
     const pinTemplate = document.querySelector(`#pin`).content.querySelector(`button`);
@@ -16,6 +17,9 @@
     }
     mapPinsBlock.appendChild(pinsFragment);
   };
+  mapPinsBlock.addEventListener(`click`, function () {
+    window.createCard();
+  });
 
   const getAddress = function (pinHeight) {
     const mainPin = document.querySelector(`.map__pin--main`);

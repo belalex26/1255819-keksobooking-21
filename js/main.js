@@ -41,7 +41,6 @@
 
   const getDisablePages = function () {
     window.pin.getAddress(window.util.PIN_HEIGTH_DISABLE);
-
     window.form.turnOff();
     mainPin.addEventListener(`mousedown`, onMainPinMouseDown);
     mainPin.addEventListener(`keydown`, onMainPinKeyDown);
@@ -50,7 +49,7 @@
   const getActivePages = function () {
     mainForm.classList.remove(`ad-form--disabled`);
     window.pin.getAddress(window.util.PIN_HEIGTH_ACTIVE);
-    window.getMapActive();
+    window.map.getMapActive();
     window.form.turnOn();
     window.backend.load(onLoadSuccess, onLoadError);
     mainPin.removeEventListener(`mousedown`, onMainPinMouseDown);
