@@ -4,6 +4,10 @@
 
   const mapPinsBlock = document.querySelector(`.map__pins`);
 
+  const onPinClick = function () {
+    window.cards.getcreateCard();
+  };
+
   const createPins = function (ads) {
     const pinsFragment = document.createDocumentFragment();
     const pinTemplate = document.querySelector(`#pin`).content.querySelector(`button`);
@@ -16,10 +20,12 @@
       pinsFragment.appendChild(pin);
     }
     mapPinsBlock.appendChild(pinsFragment);
+
+    mapPinsBlock.addEventListener(`click`, function (evt) {
+      evt.preventDefault();
+      onPinClick(ads);
+    });
   };
-  mapPinsBlock.addEventListener(`click`, function () {
-    window.createCard();
-  });
 
   const getAddress = function (pinHeight) {
     const mainPin = document.querySelector(`.map__pin--main`);

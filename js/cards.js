@@ -10,7 +10,7 @@
     bungalow: `Бунгало`,
   };
 
-  const checkElementForData = (content, element) => {
+  const checkElementForData = function (content, element) {
     if (!content) {
       element.style.display = `none`;
     }
@@ -31,7 +31,7 @@
     }
   };
 
-  const renderPhotos = (container, data) => {
+  const renderPhotos = function (container, data) {
     container.innerHTML = ``;
     data.forEach((src) => {
       const photoCreateElement = document.createElement(`img`);
@@ -43,9 +43,9 @@
     });
   };
 
-  const renderFeatures = (container, data) => {
+  const renderFeatures = function (container, data) {
     container.innerHTML = ``;
-    data.forEach((feature) => {
+    data.forEach(function (feature) {
       const featureCreateElement = document.createElement(`li`);
       featureCreateElement.classList.add(`popup__feature`);
       featureCreateElement.classList.add(`popup__feature--` + feature);
@@ -53,38 +53,43 @@
     });
   };
 
-  window.createCard = (cardsContent) => {
-    const mapCardTemplate = templateCard.content.querySelector(`.popup`);
-    const mapCard = mapCardTemplate.cloneNode(true);
+  const getcreateCard = function (cardsContent) {
+    const adsCardTemplate = templateCard.content.querySelector(`.popup`);
+    const adsCard = adsCardTemplate.cloneNode(true);
 
-    mapCard.querySelector(`.popup__title`).textContent = cardsContent.offer.title;
-    mapCard.querySelector(`.popup__text--address`).textContent = cardsContent.offer.address;
-    mapCard.querySelector(`.popup__text--price`).textContent = cardsContent.offer.price + `₽/ночь`;
-    mapCard.querySelector(`.popup__type`).textContent = houseTypes[cardsContent.offer.type];
-    mapCard.querySelector(`.popup__text--time`).textContent = `Заезд после ` + cardsContent.offer.checkin + `, выезд до ` + cardsContent.offer.checkout;
-    mapCard.querySelector(`.popup__avatar`).src = cardsContent.author.avatar;
+    adsCard.querySelector(`.popup__title`).textContent = cardsContent.offer.title;
+    adsCard.querySelector(`.popup__text--address`).textContent = cardsContent.offer.address;
+    adsCard.querySelector(`.popup__text--price`).textContent = cardsContent.offer.price + `₽/ночь`;
+    adsCard.querySelector(`.popup__type`).textContent = houseTypes[cardsContent.offer.type];
+    adsCard.querySelector(`.popup__text--time`).textContent = `Заезд после ` + cardsContent.offer.checkin + `, выезд до ` + cardsContent.offer.checkout;
+    adsCard.querySelector(`.popup__avatar`).src = cardsContent.author.avatar;
 
-    checkElementForData(cardsContent.offer.title, mapCard.querySelector(`.popup__title`));
-    checkElementForData(cardsContent.offer.address, mapCard.querySelector(`.popup__text--address`));
-    checkElementForData(cardsContent.offer.price, mapCard.querySelector(`.popup__text--price`));
-    checkElementForData(cardsContent.offer.type, mapCard.querySelector(`.popup__type`));
-    checkElementForData(cardsContent.offer.checkin, mapCard.querySelector(`.popup__text--time`));
-    checkElementForData(cardsContent.offer.checkout, mapCard.querySelector(`.popup__text--time`));
-    checkElementForData(cardsContent.offer.features, mapCard.querySelector(`.popup__features`));
-    checkElementForData(cardsContent.offer.description, mapCard.querySelector(`.popup__description`));
-    checkElementForData(cardsContent.offer.photos, mapCard.querySelector(`.popup__photos`));
-    checkElementForData(cardsContent.author.avatar, mapCard.querySelector(`.popup__avatar`));
 
-    renderFeatures(mapCard.querySelector(`.popup__features`), cardsContent.offer.features);
-    renderPhotos(mapCard.querySelector(`.popup__photos`), cardsContent.offer.photos);
-    verifyQuantityRoomsGuests(mapCard.querySelector(`.popup__text--capacity`), cardsContent.offer.rooms, cardsContent.offer.guests);
-    mapCard.querySelector(`.popup__close`).addEventListener(`click`, () => {
+    checkElementForData(cardsContent.offer.title, adsCard.querySelector(`.popup__title`));
+    checkElementForData(cardsContent.offer.address, adsCard.querySelector(`.popup__text--address`));
+    checkElementForData(cardsContent.offer.price, adsCard.querySelector(`.popup__text--price`));
+    checkElementForData(cardsContent.offer.type, adsCard.querySelector(`.popup__type`));
+    checkElementForData(cardsContent.offer.checkin, adsCard.querySelector(`.popup__text--time`));
+    checkElementForData(cardsContent.offer.checkout, adsCard.querySelector(`.popup__text--time`));
+    checkElementForData(cardsContent.offer.features, adsCard.querySelector(`.popup__features`));
+    checkElementForData(cardsContent.offer.description, adsCard.querySelector(`.popup__description`));
+    checkElementForData(cardsContent.offer.photos, adsCard.querySelector(`.popup__photos`));
+    checkElementForData(cardsContent.author.avatar, adsCard.querySelector(`.popup__avatar`));
+
+    renderFeatures(adsCard.querySelector(`.popup__features`), cardsContent.offer.features);
+    renderPhotos(adsCard.querySelector(`.popup__photos`), cardsContent.offer.photos);
+    verifyQuantityRoomsGuests(adsCard.querySelector(`.popup__text--capacity`), cardsContent.offer.rooms, cardsContent.offer.guests);
+
+    adsCard.querySelector(`.popup__close`).addEventListener(`click`, function () {
       window.map.closeCard();
     });
-    mapCard.querySelector(`.popup__close`).addEventListener(`keydown`, window.map.onCardEnterPress);
+    adsCard.querySelector(`.popup__close`).addEventListener(`keydown`, window.map.onCardEnterPress);
     document.addEventListener(`keydown`, window.map.onCardEscPress);
 
-    return mapCard;
+    return adsCard;
+  };
+  window.cards = {
+    getcreateCard: getcreateCard
   };
 
 })();

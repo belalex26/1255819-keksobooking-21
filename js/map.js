@@ -29,14 +29,13 @@
     }
   };
 
-  const renderCard = (data) => {
+  const renderCard = function (data) {
     const card = document.querySelector(`.map__card`);
     if (card) {
       card.remove();
     }
-    mapActive.appendChild(window.createCard(data));
+    mapActive.appendChild(window.cards.getcreateCard(data));
   };
-
 
   window.map = {
     getMapActive: getMapActive,
