@@ -33,8 +33,18 @@
     addressData.value = Math.floor(parseInt(mainPin.style.left, 10) + window.util.PIN_WIDTH / 2) + `, ` + Math.floor((parseInt(mainPin.style.top, 10) + pinHeight));
   };
 
+  // удаление метки
+
+  const deletePins = function () {
+    const pins = mapPinsBlock.querySelectorAll(`.map__pin:not(.map__pin--main)`);
+    for (let pin of pins) {
+      pin.remove();
+    }
+  };
+
   window.pin = {
     createPins: createPins,
-    getAddress: getAddress
+    getAddress: getAddress,
+    deletePins: deletePins
   };
 })();
