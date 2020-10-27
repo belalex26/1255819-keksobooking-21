@@ -21,8 +21,9 @@
 
   // создание метки
   const onLoadSuccess = function (ads) {
-    window.pin.createPins(ads);
+    window.filter.loadData(ads);
   };
+
 
   // обработчики
 
@@ -38,10 +39,8 @@
     }
   };
 
-
   const getDisablePages = function () {
     window.pin.getAddress(window.util.PIN_HEIGTH_DISABLE);
-
     window.form.turnOff();
     mainPin.addEventListener(`mousedown`, onMainPinMouseDown);
     mainPin.addEventListener(`keydown`, onMainPinKeyDown);
