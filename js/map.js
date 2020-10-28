@@ -29,17 +29,8 @@
     }
   };
 
-  const renderCard = function (data) {
-    const card = document.querySelector(`.map__card`);
-    if (card) {
-      card.remove();
-    }
-    mapActive.appendChild(window.cards.getcreateCard(data));
-  };
-
   window.map = {
     getMapActive: getMapActive,
-    renderCard: renderCard,
     onCardEnterPress: onCardEnterPress,
     onCardEscPress: onCardEscPress
   };

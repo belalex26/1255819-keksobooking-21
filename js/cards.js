@@ -53,7 +53,7 @@
     });
   };
 
-  const getcreateCard = function (cardsContent) {
+  const createCard = function (cardsContent) {
     const adsCardTemplate = templateCard.content.querySelector(`.popup`);
     const adsCard = adsCardTemplate.cloneNode(true);
 
@@ -63,7 +63,6 @@
     adsCard.querySelector(`.popup__type`).textContent = houseTypes[cardsContent.offer.type];
     adsCard.querySelector(`.popup__text--time`).textContent = `Заезд после ` + cardsContent.offer.checkin + `, выезд до ` + cardsContent.offer.checkout;
     adsCard.querySelector(`.popup__avatar`).src = cardsContent.author.avatar;
-
 
     checkElementForData(cardsContent.offer.title, adsCard.querySelector(`.popup__title`));
     checkElementForData(cardsContent.offer.address, adsCard.querySelector(`.popup__text--address`));
@@ -86,10 +85,10 @@
     adsCard.querySelector(`.popup__close`).addEventListener(`keydown`, window.map.onCardEnterPress);
     document.addEventListener(`keydown`, window.map.onCardEscPress);
 
-    return adsCard;
   };
+
   window.cards = {
-    getcreateCard: getcreateCard
+    createCard: createCard
   };
 
 })();
