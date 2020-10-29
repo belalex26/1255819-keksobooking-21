@@ -25,7 +25,6 @@
         getPinClick(ads);
       });
       adsDataContent.push(pin);
-      console.log(ads); // проверка массива
       pinsFragment.appendChild(pin);
     }
     mapPinsBlock.appendChild(pinsFragment);
