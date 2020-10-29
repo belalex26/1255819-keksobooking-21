@@ -39,6 +39,7 @@
 
   window.map = {
     renderCard: renderCard,
+    closeCard: closeCard,
     getMapActive: getMapActive,
     onCardEnterPress: onCardEnterPress,
     onCardEscPress: onCardEscPress,
