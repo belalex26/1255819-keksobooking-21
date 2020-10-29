@@ -1,0 +1,90 @@
+'use strict';
+
+(function () {
+  const map = document.querySelector(`.map`);
+  const pinsList = document.querySelector(`.map__pins`);
+  const mainPin = map.querySelector(`.map__pin--main`);
+  const leftButtonMouseDown = 0;
+
+  const POSITION_MIN_X = 0 - (window.util.PIN_WIDTH / 2);
+  const POSITION_MIN_Y = 130 - window.util.PIN_HEIGTH_DISABLE;
+
+  const POSITION_MAX_X = pinsList.clientWidth - (window.util.PIN_WIDTH / 2);
+  const POSITION_MAX_Y = 630 - window.util.PIN_HEIGTH_DISABLE;
+
+  mainPin.addEventListener(`mousedown`, function (evt) {
+    evt.preventDefault();
+
+    let initialPosition = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+
+    const checkPosition = function (coords) {
+      if (coords.x <= POSITION_MIN_X) {
+        coords.x = POSITION_MIN_X;
+      }
+      if (coords.x >= POSITION_MAX_X) {
+        coords.x = POSITION_MAX_X;
+      }
+      if (coords.y <= POSITION_MIN_Y) {
+        coords.y = POSITION_MIN_Y;
+      }
+      if (coords.y >= POSITION_MAX_Y) {
+        coords.y = POSITION_MAX_Y;
+      }
+    };
+
+    const onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+
+      let shift = {
+        x: initialPosition.x - moveEvt.clientX,
+        y: initialPosition.y - moveEvt.clientY
+      };
+
+      initialPosition = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
+      };
+
+      let newCoords = {
+        x: mainPin.offsetLeft - shift.x,
+        y: mainPin.offsetTop - shift.y
+      };
+
+      checkPosition(newCoords);
+
+      mainPin.style.top = newCoords.y + `px`;
+      mainPin.style.left = newCoords.x + `px`;
+
+      window.map.getMapActive();
+      window.main.getActivePages();
+    };
+
+    const onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+      document.removeEventListener(`mousemove`, onMouseMove);
+
+      if (evt.button === leftButtonMouseDown) {
+        window.main.getActivePages();
+        window.map.getMapActive();
+        document.removeEventListener(`mouseup`, onMouseUp);
+      }
+    };
+
+    document.addEventListener(`mousemove`, onMouseMove);
+    document.addEventListener(`mouseup`, onMouseUp);
+  });
+
+  const onMainPinKeyDown = function (evt) {
+
+    if (evt.key === `Enter`) {
+      window.main.getActivePages();
+      window.map.getMapActive();
+      document.removeEventListener(`keydown`, onMainPinKeyDown);
+    }
+  };
+  mainPin.addEventListener(`keydown`, onMainPinKeyDown);
+
+})();

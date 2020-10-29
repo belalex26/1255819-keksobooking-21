@@ -21,7 +21,7 @@
     window.pin.createPins(applyAll(window.dataAds));
   };
 
-  housingTypeFilterElement.addEventListener(`change`, () =>{
+  housingTypeFilterElement.addEventListener(`change`, function () {
     window.pin.deletePins();
     window.pin.createPins(applyAll(window.dataAds));
   });
