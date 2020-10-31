@@ -7,10 +7,10 @@
   const leftButtonMouseDown = 0;
 
   const POSITION_MIN_X = 0 - (window.util.PIN_WIDTH / 2);
-  const POSITION_MIN_Y = 130 - window.util.PIN_HEIGTH_DISABLE;
+  const POSITION_MIN_Y = 80 - window.util.PIN_HEIGTH_DISABLE;
 
   const POSITION_MAX_X = pinsList.clientWidth - (window.util.PIN_WIDTH / 2);
-  const POSITION_MAX_Y = 630 - window.util.PIN_HEIGTH_DISABLE;
+  const POSITION_MAX_Y = 579 - window.util.PIN_HEIGTH_DISABLE;
 
   mainPin.addEventListener(`mousedown`, function (evt) {
     evt.preventDefault();
@@ -58,7 +58,7 @@
       mainPin.style.top = newCoords.y + `px`;
       mainPin.style.left = newCoords.x + `px`;
 
-      window.map.getMapActive();
+      window.map.getActive();
       window.main.getActivePages();
     };
 
@@ -68,7 +68,7 @@
 
       if (evt.button === leftButtonMouseDown) {
         window.main.getActivePages();
-        window.map.getMapActive();
+        window.map.getActive();
         document.removeEventListener(`mouseup`, onMouseUp);
       }
     };
@@ -81,7 +81,7 @@
 
     if (evt.key === `Enter`) {
       window.main.getActivePages();
-      window.map.getMapActive();
+      window.map.getActive();
       document.removeEventListener(`keydown`, onMainPinKeyDown);
     }
   };
