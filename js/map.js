@@ -38,6 +38,8 @@
   };
 
   window.map = {
+    renderCard: renderCard,
+    closeCard: closeCard,
     getActive: getActive,
     onCardEnterPress: onCardEnterPress,
     onCardEscPress: onCardEscPress,
