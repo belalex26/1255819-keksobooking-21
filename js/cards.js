@@ -85,6 +85,7 @@
     adsCard.querySelector(`.popup__close`).addEventListener(`keydown`, window.map.onCardEnterPress);
     document.addEventListener(`keydown`, window.map.onCardEscPress);
 
+    return adsCard;
   };
 
   window.cards = {

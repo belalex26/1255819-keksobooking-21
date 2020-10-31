@@ -3,8 +3,32 @@
 (function () {
 
   const mapPinsBlock = document.querySelector(`.map__pins`);
-  const adsDataContent = [];
+  window.adsDataContent = [];
 
+  const createPin = function (template, content) {
+    const pinItem = template.cloneNode(true);
+    pinItem.firstChild.src = content.author.avatar;
+    pinItem.firstChild.alt = content.offer.title;
+    pinItem.style.left = content.location.x - (window.util.PIN_WIDTH / 2) + `px`;
+    pinItem.style.top = content.location.y - (window.util.PIN_HEIGTH_ACTIVE) + `px`;
+
+    pinItem.addEventListener(`click`, function () {
+      window.map.renderCard(content);
+    });
+    return pinItem;
+  };
+
+  const renderPins = function (pins) {
+    const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
+    const fragment = document.createDocumentFragment();
+
+    pins.forEach(function (pin) {
+      fragment.appendChild(createPin(pinTemplate, pin));
+    });
+    mapPinsBlock.appendChild(fragment);
+  };
+
+  /*
   const getPinClick = function (cardsDataContent) {
     window.cards.createCard(cardsDataContent);
   };
@@ -29,7 +53,8 @@
     }
     mapPinsBlock.appendChild(pinsFragment);
 
-  };
+  };*/
+
   const getAddress = function (pinHeight) {
     const mainPin = document.querySelector(`.map__pin--main`);
     const addressData = document.querySelector(`#address`);
@@ -46,7 +71,7 @@
   };
 
   window.pin = {
-    createPins: createPins,
+    renderPins: renderPins,
     getAddress: getAddress,
     deletePins: deletePins
   };

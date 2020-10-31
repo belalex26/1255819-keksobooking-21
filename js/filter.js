@@ -18,12 +18,12 @@
 
   const loadData = function (data) {
     window.dataAds = data;
-    window.pin.createPins(applyAll(window.dataAds));
+    window.pin.renderPins(applyAll(window.dataAds));
   };
 
   housingTypeFilterElement.addEventListener(`change`, function () {
     window.pin.deletePins();
-    window.pin.createPins(applyAll(window.dataAds));
+    window.pin.renderPins(applyAll(window.dataAds));
   });
 
   const hideFormIfError = function () {

@@ -29,9 +29,17 @@
     }
   };
 
+  const renderCard = function (data) {
+    const card = document.querySelector(`.map__card`);
+    if (card) {
+      card.remove();
+    }
+    mapActive.appendChild(window.cards.createCard(data));
+  };
+
   window.map = {
     getActive: getActive,
     onCardEnterPress: onCardEnterPress,
-    onCardEscPress: onCardEscPress
+    onCardEscPress: onCardEscPress,
   };
 })();
