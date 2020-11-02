@@ -7,7 +7,7 @@
   const leftButtonMouseDown = 0;
 
   const POSITION_MIN_X = 0 - window.util.PIN_WIDTH / 2;
-  const POSITION_MIN_Y = 80 - window.util.PIN_HEIGTH_DISABLE;
+  const POSITION_MIN_Y = 79 - window.util.PIN_HEIGTH_DISABLE;
 
   const POSITION_MAX_X = pinsList.clientWidth - Math.floor(window.util.PIN_WIDTH / 2);
   const POSITION_MAX_Y = 579 - window.util.PIN_HEIGTH_DISABLE;
