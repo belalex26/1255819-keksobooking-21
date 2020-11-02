@@ -13,12 +13,6 @@
   const fieldsets = document.getElementsByTagName(`fieldset`);
   const propertyType = document.querySelector(`#type`);
   const propertyPrice = document.querySelector(`#price`);
-  const imageUser = formAd.querySelector(`.ad-form-header__preview img`);
-  const inputUser = formAd.querySelector(`.ad-form-header__input`);
-  const inputImage = formAd.querySelector(`.ad-form__input`);
-  const imageHousing = formAd.querySelector(`.ad-form__photo`);
-
-  const typeFiles = [`gif`, `jpg`, `jpeg`, `png`];
 
   const minPriceAds = {
     bungalow: `0`,
@@ -121,51 +115,6 @@
 
     titleAd.reportValidity();
   };
-
-  // проверка фотографий
-
-  const loadImage = function (evt, target) {
-    const file = evt.target.files[0];
-    const fileName = file.name.toLowerCase();
-    const matches = typeFiles.some(function (it) {
-      return fileName.endsWith(it);
-    });
-
-    if (matches) {
-      const reader = new FileReader();
-      target.src = ``;
-
-      reader.addEventListener(`load`, function (event) {
-        target.src = event.target.result;
-      });
-
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const onUserImageLoad = function (evt) {
-    loadImage(evt, imageUser);
-  };
-
-  const onPhotoHousingLoad = function (evt) {
-    imageHousing.innerHTML = ``;
-    imageHousing.appendChild(getNewPhoto(evt));
-  };
-
-  const getNewPhoto = function (evt) {
-    const file = document.createElement(`img`);
-
-    file.setAttribute(`height`, `100%`);
-    file.setAttribute(`width`, `100%`);
-    file.style.borderRadius = `5px`;
-    file.setAttribute(`alt`, `Фотография объекта`);
-
-    loadImage(evt, file);
-    return file;
-  };
-
-  inputUser.addEventListener(`change`, onUserImageLoad);
-  inputImage.addEventListener(`change`, onPhotoHousingLoad);
 
   titleAd.addEventListener(`input`, function () {
     validateTitle();
