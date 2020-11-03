@@ -2,6 +2,7 @@
 
 (function () {
   const fieldsets = document.getElementsByTagName(`fieldset`);
+  // const formAd = document.querySelector(`.ad-form`);
 
   const formTurnOff = function () {
     for (let i = 0; i < fieldsets.length; i++) {
@@ -79,6 +80,13 @@ propertyType.addEventListener(`change`, selectPrice);
 
   roomNumberSelect.addEventListener(`change`, onRoomNumberSelectChange);
   submitBtn.addEventListener(`click`, onSubmitBtnClick);
+
+  /*
+  const onFormSubmit = (evt) => {
+    evt.preventDefault();
+    window.backend.save(new FormData(formAd), onFormSendSuccess, onFormSendError);
+  };
+  */
 
   window.form = {
     turnOff: formTurnOff,
