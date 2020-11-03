@@ -2,6 +2,8 @@
 
 (function () {
   const fieldsets = document.getElementsByTagName(`fieldset`);
+  // const templateSuccessForm = document.querySelector(`#success`).content.querySelector(`.success`);
+  // const templateErrorForm = document.querySelector(`#error`).content.querySelector(`.error`);
 
   const formTurnOff = function () {
     for (let i = 0; i < fieldsets.length; i++) {
@@ -14,30 +16,6 @@
       fieldsets[i].disabled = false;
     }
   };
-
-
-  /* валидация
-const propertyType = document.querySelector(`#type`);
-const propertyPrice = document.querySelector(`#price`);
-
-const selectPrice = function () {
-  if (propertyType.value === `bungalow`) {
-    propertyPrice.setAttribute(`min`, `0`);
-    propertyPrice.setAttribute(`placeholder`, `0`);
-  } else if (propertyType.value === `flat`) {
-    propertyPrice.setAttribute(`min`, `1000`);
-    propertyPrice.setAttribute(`placeholder`, `1000`);
-  } else if (propertyType.value === `house`) {
-    propertyPrice.setAttribute(`min`, `5000`);
-    propertyPrice.setAttribute(`placeholder`, `5000`);
-  } else if (propertyType.value === `palace`) {
-    propertyPrice.setAttribute(`min`, `10000`);
-    propertyPrice.setAttribute(`placeholder`, `10000`);
-  }
-};
-
-propertyType.addEventListener(`change`, selectPrice);
-*/
 
   // проверка по количеству комнат
   const roomGuestRation = {
