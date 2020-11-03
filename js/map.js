@@ -3,7 +3,7 @@
 (function () {
   const mapActive = document.querySelector(`.map`);
 
-  const getMapActive = function () {
+  const getActive = function () {
     mapActive.classList.remove(`map--faded`);
   };
 
@@ -40,7 +40,7 @@
   window.map = {
     renderCard: renderCard,
     closeCard: closeCard,
-    getMapActive: getMapActive,
+    getActive: getActive,
     onCardEnterPress: onCardEnterPress,
     onCardEscPress: onCardEscPress,
   };
