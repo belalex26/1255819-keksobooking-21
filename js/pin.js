@@ -28,33 +28,6 @@
     mapPinsBlock.appendChild(fragment);
   };
 
-  /*
-  const getPinClick = function (cardsDataContent) {
-    window.cards.createCard(cardsDataContent);
-  };
-
-  const createPins = function (ads) {
-    const pinsFragment = document.createDocumentFragment();
-    const pinTemplate = document.querySelector(`#pin`).content.querySelector(`button`);
-
-
-    for (let i = 0; i < ads.length; i++) {
-      const pin = pinTemplate.cloneNode(true);
-      pin.style = `left:` + (ads[i].location.x - 25) + `px; top:` + (ads[i].location.y - 70) + `px;`;
-      pin.querySelector(`img`).src = ads[i].author.avatar;
-      pin.querySelector(`img`).alt = ads[i].offer.description;
-
-      pin.addEventListener(`click`, function (evt) {
-        evt.preventDefault();
-        getPinClick(ads);
-      });
-      adsDataContent.push(pin);
-      pinsFragment.appendChild(pin);
-    }
-    mapPinsBlock.appendChild(pinsFragment);
-
-  };*/
-
   const getAddress = function (pinHeight) {
     const mainPin = document.querySelector(`.map__pin--main`);
     const addressData = document.querySelector(`#address`);
