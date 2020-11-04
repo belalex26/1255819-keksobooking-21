@@ -3,16 +3,28 @@
 (function () {
   const MIN_LENGTH_TITLE = 30;
   const MAX_LENGTH_TITLE = 100;
+  const map = document.querySelector(`.map`);
   const formAd = document.querySelector(`.ad-form`);
+  const formAdHeader = formAd.querySelector(`.ad-form-header`);
   const titleAd = formAd.querySelector(`#title`);
   const timeIn = formAd.querySelector(`#timein`);
   const timeOut = formAd.querySelector(`#timeout`);
   const roomNumberSelect = document.querySelector(`#room_number`);
   const capacitySelect = document.querySelector(`#capacity`);
+  const addressInput = formAd.querySelector(`#address`);
   const submitBtn = document.querySelector(`.ad-form__submit`);
   const fieldsets = document.getElementsByTagName(`fieldset`);
   const propertyType = document.querySelector(`#type`);
   const propertyPrice = document.querySelector(`#price`);
+  const formAdReset = document.querySelector(`.ad-form__reset`);
+  const mainPin = map.querySelector(`.map__pin--main`);
+  const templateSuccessForm = document.querySelector(`#success`).content.querySelector(`.success`);
+  const templateErrorForm = document.querySelector(`#error`).content.querySelector(`.error`);
+  const pinsList = document.querySelector(`.map__pins`);
+  const closeButton = document.createElement(`button`);
+
+  const pinMainPositionLeft = mainPin.style.left;
+  const pinMainPositionTop = mainPin.style.top;
 
   const minPriceAds = {
     bungalow: `0`,
@@ -124,17 +136,128 @@
     for (let i = 0; i < fieldsets.length; i++) {
       fieldsets[i].disabled = true;
     }
+    formAdReset.addEventListener(`click`, onResetPress);
   };
 
   const formTurnOn = function () {
     for (let i = 0; i < fieldsets.length; i++) {
       fieldsets[i].disabled = false;
     }
+    formAd.addEventListener(`submit`, onFormSubmit);
+    formAdReset.addEventListener(`click`, onResetPress);
   };
+
+
+  const setAddressOnPageNotActive = function () {
+    addressInput.value = parseInt(mainPin.style.left, 10) + window.util.PIN_WIDTH / 2 + `, ` + (parseInt(mainPin.style.top, 10) + window.util.PIN_HEIGTH_DISABLE);
+  };
+
+  setAddressOnPageNotActive();
+
+  const setAddressOnPageActive = function () {
+    addressInput.value = parseInt(mainPin.style.left, 10) + window.util.PIN_WIDTH / 2 + `, ` + (parseInt(mainPin.style.top, 10) + window.util.PIN_HEIGTH_ACTIVE);
+  };
+
+  // очистка формы
+
+  const clearForm = function () {
+    formAd.reset();
+    window.pin.deletePins();
+    window.map.closeCard();
+    setAddressOnPageNotActive();
+    mainPin.style.left = pinMainPositionLeft;
+    mainPin.style.top = pinMainPositionTop;
+    map.classList.add(`map--faded`);
+    formTurnOff(formAdHeader);
+    window.filter.getDisabled();
+    formAd.classList.add(`ad-form--disabled`);
+
+    mainPin.addEventListener(`mousedown`, window.util.isLeftMouseButtonDown);
+    mainPin.addEventListener(`keydown`, window.util.isEnterPressed);
+  };
+
+  const onResetPress = function (evt) {
+    evt.preventDefault();
+    clearForm();
+  };
+
+  // обработчик
+
+  const onPopupClickSuccess = function () {
+    if (window.util.isLeftMouseButtonDown || window.util.isEscPressed) {
+      formAd.querySelector(`.success`).remove();
+      document.removeEventListener(`keydown`, onPopupClickSuccess);
+      document.removeEventListener(`mouseup`, onPopupClickSuccess);
+    }
+  };
+
+  // сообщения при отправке формы
+
+  const onFormSendSuccess = function () {
+    const successPopup = templateSuccessForm.cloneNode(true);
+
+    document.addEventListener(`keydown`, onPopupClickSuccess);
+    document.addEventListener(`mouseup`, onPopupClickSuccess);
+    formAd.appendChild(successPopup);
+    clearForm();
+    propertyType.removeEventListener(`change`, validateType);
+    roomNumberSelect.removeEventListener(`change`, checkRooms);
+    formAdReset.removeEventListener(`click`, onResetPress);
+    formAd.removeEventListener(`submit`, onFormSubmit);
+  };
+
+  const onErrorPopupClick = function () {
+    if (window.util.isLeftMouseButtonDown || window.util.isEscPressed) {
+      pinsList.querySelector(`.error`).remove();
+      closeButton.removeEventListener(`mouseup`, onErrorPopupClick);
+      document.removeEventListener(`keydown`, onErrorPopupClick);
+    }
+  };
+
+  const onFormSendError = function (errorMessage) {
+    const errorPopup = templateErrorForm.cloneNode(true);
+    const errorButton = errorPopup.querySelector(`.error__button`);
+    // const closeButton = document.createElement(`button`);
+
+    /* const onErrorPopupClick = function () {
+      if (window.util.isLeftMouseButtonDown || window.util.isEscPressed) {
+        pinsList.querySelector(`.error`).remove();
+        closeButton.removeEventListener(`mouseup`, onErrorPopupClick);
+        document.removeEventListener(`keydown`, onErrorPopupClick);
+      }
+    };
+*/
+    const onDataSendAgain = function (evt) {
+      onErrorPopupClick(evt);
+      errorButton.removeEventListener(`mouseup`, onDataSendAgain);
+    };
+
+    errorPopup.querySelector(`.error__message`).textContent = errorMessage;
+    errorButton.addEventListener(`mouseup`, onDataSendAgain);
+
+    closeButton.classList.add(`error__button`);
+    closeButton.textContent = `Закрыть`;
+
+    closeButton.addEventListener(`mouseup`, onErrorPopupClick);
+    document.addEventListener(`keydown`, onErrorPopupClick);
+
+    errorPopup.appendChild(closeButton);
+    pinsList.appendChild(errorPopup);
+  };
+
+  // отправка формы
+
+  const onFormSubmit = function (evt) {
+    evt.preventDefault();
+    window.backend.upload(new FormData(formAd), onFormSendSuccess, onFormSendError);
+  };
+
 
   window.form = {
     turnOff: formTurnOff,
-    turnOn: formTurnOn
+    turnOn: formTurnOn,
+    setAddressOnPageActive: setAddressOnPageActive,
+    setAddressOnPageNotActive: setAddressOnPageNotActive
   };
 })();
 

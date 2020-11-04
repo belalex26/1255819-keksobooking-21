@@ -4,7 +4,6 @@
   const map = document.querySelector(`.map`);
   const pinsList = document.querySelector(`.map__pins`);
   const mainPin = map.querySelector(`.map__pin--main`);
-  const leftButtonMouseDown = 0;
 
   const POSITION_MIN_X = 0 - window.util.PIN_WIDTH / 2;
   const POSITION_MIN_Y = 79 - window.util.PIN_HEIGTH_DISABLE;
@@ -66,7 +65,7 @@
       upEvt.preventDefault();
       document.removeEventListener(`mousemove`, onMouseMove);
 
-      if (evt.button === leftButtonMouseDown) {
+      if (window.util.isLeftMouseButtonDown) {
         window.main.getActivePages();
         window.map.getActive();
         document.removeEventListener(`mouseup`, onMouseUp);
@@ -77,9 +76,9 @@
     document.addEventListener(`mouseup`, onMouseUp);
   });
 
-  const onMainPinKeyDown = function (evt) {
+  const onMainPinKeyDown = function () {
 
-    if (evt.key === `Enter`) {
+    if (window.util.isEnterPressed) {
       window.main.getActivePages();
       window.map.getActive();
       document.removeEventListener(`keydown`, onMainPinKeyDown);

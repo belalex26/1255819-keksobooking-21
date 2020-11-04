@@ -3,6 +3,7 @@
 (function () {
   const mainForm = document.querySelector(`.ad-form`);
 
+
   // блок с ошибкой
 
   const onLoadError = function (errorMessage) {
@@ -16,6 +17,9 @@
     element.textContent = errorMessage;
     document.body.insertAdjacentElement(`afterbegin`, element);
   };
+
+  // сообщения при отправке формы
+
 
   // создание метки
   const onLoadSuccess = function (ads) {
