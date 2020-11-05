@@ -149,28 +149,28 @@
 
 
   const setAddressOnPageNotActive = function () {
-    addressInput.value = parseInt(mainPin.style.left, 10) + window.util.PIN_WIDTH / 2 + `, ` + (parseInt(mainPin.style.top, 10) + window.util.PIN_HEIGTH_DISABLE);
+    addressInput.value = Math.floor(parseInt(mainPin.style.left, 10) + window.util.PIN_WIDTH / 2) + `, ` + Math.floor(parseInt(mainPin.style.top, 10) + window.util.PIN_HEIGTH_DISABLE);
   };
 
   setAddressOnPageNotActive();
 
   const setAddressOnPageActive = function () {
-    addressInput.value = parseInt(mainPin.style.left, 10) + window.util.PIN_WIDTH / 2 + `, ` + (parseInt(mainPin.style.top, 10) + window.util.PIN_HEIGTH_ACTIVE);
+    addressInput.value = Math.floor(parseInt(mainPin.style.left, 10) + window.util.PIN_WIDTH / 2) + `, ` + Math.floor(parseInt(mainPin.style.top, 10) + window.util.PIN_HEIGTH_ACTIVE / 2);
   };
 
   // очистка формы
 
   const clearForm = function () {
+    map.classList.add(`map--faded`);
+    formAd.classList.add(`ad-form--disabled`);
     formAd.reset();
     window.pin.deletePins();
     window.map.closeCard();
-    setAddressOnPageNotActive();
     mainPin.style.left = pinMainPositionLeft;
     mainPin.style.top = pinMainPositionTop;
-    map.classList.add(`map--faded`);
     formTurnOff(formAdHeader);
-    window.filter.getDisabled();
-    formAd.classList.add(`ad-form--disabled`);
+    window.filter.getDisable();
+    window.pin.getAddress(window.util.PIN_HEIGTH_DISABLE);
 
     mainPin.addEventListener(`mousedown`, window.util.isLeftMouseButtonDown);
     mainPin.addEventListener(`keydown`, window.util.isEnterPressed);
@@ -217,16 +217,6 @@
   const onFormSendError = function (errorMessage) {
     const errorPopup = templateErrorForm.cloneNode(true);
     const errorButton = errorPopup.querySelector(`.error__button`);
-    // const closeButton = document.createElement(`button`);
-
-    /* const onErrorPopupClick = function () {
-      if (window.util.isLeftMouseButtonDown || window.util.isEscPressed) {
-        pinsList.querySelector(`.error`).remove();
-        closeButton.removeEventListener(`mouseup`, onErrorPopupClick);
-        document.removeEventListener(`keydown`, onErrorPopupClick);
-      }
-    };
-*/
     const onDataSendAgain = function (evt) {
       onErrorPopupClick(evt);
       errorButton.removeEventListener(`mouseup`, onDataSendAgain);
@@ -245,6 +235,16 @@
     pinsList.appendChild(errorPopup);
   };
 
+  const getActive = function () {
+    setAddressOnPageActive();
+    map.classList.remove(`map--faded`);
+    formAd.classList.remove(`ad-form--disabled`);
+    formTurnOn();
+    window.filter.getActive();
+    formAd.addEventListener(`submit`, onFormSubmit);
+    formAdReset.addEventListener(`click`, onResetPress);
+  };
+
   // отправка формы
 
   const onFormSubmit = function (evt) {
@@ -256,8 +256,7 @@
   window.form = {
     turnOff: formTurnOff,
     turnOn: formTurnOn,
-    setAddressOnPageActive: setAddressOnPageActive,
-    setAddressOnPageNotActive: setAddressOnPageNotActive
+    getActive: getActive
   };
 })();
 

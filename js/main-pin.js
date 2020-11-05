@@ -6,10 +6,10 @@
   const mainPin = map.querySelector(`.map__pin--main`);
 
   const POSITION_MIN_X = 0 - window.util.PIN_WIDTH / 2;
-  const POSITION_MIN_Y = 79 - window.util.PIN_HEIGTH_DISABLE;
+  const POSITION_MIN_Y = 121 - window.util.PIN_HEIGTH_DISABLE;
 
   const POSITION_MAX_X = pinsList.clientWidth - Math.floor(window.util.PIN_WIDTH / 2);
-  const POSITION_MAX_Y = 579 - window.util.PIN_HEIGTH_DISABLE;
+  const POSITION_MAX_Y = 621 - window.util.PIN_HEIGTH_DISABLE;
 
   mainPin.addEventListener(`mousedown`, function (evt) {
     evt.preventDefault();

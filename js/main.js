@@ -1,8 +1,6 @@
 'use strict';
 
 (function () {
-  const mainForm = document.querySelector(`.ad-form`);
-
 
   // блок с ошибкой
 
@@ -32,9 +30,9 @@
   };
 
   const getActivePages = function () {
-    mainForm.classList.remove(`ad-form--disabled`);
     window.pin.getAddress(window.util.PIN_HEIGTH_ACTIVE);
-    window.form.turnOn();
+    window.form.getActive();
+    // window.filter.getActive();
     window.backend.load(onLoadSuccess, onLoadError);
 
   };
@@ -42,6 +40,7 @@
   getDisablePages();
 
   window.main = {
+    onLoadError: onLoadError,
     getActivePages: getActivePages
   };
 
