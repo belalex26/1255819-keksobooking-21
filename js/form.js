@@ -137,6 +137,7 @@
       fieldsets[i].disabled = true;
     }
     formAdReset.addEventListener(`click`, onResetPress);
+    validateType();
   };
 
   const formTurnOn = function () {
@@ -243,6 +244,7 @@
     window.filter.getActive();
     formAd.addEventListener(`submit`, onFormSubmit);
     formAdReset.addEventListener(`click`, onResetPress);
+    validateType();
   };
 
   // отправка формы
