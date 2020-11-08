@@ -65,19 +65,14 @@
     window.pin.renderPins(applyAll(window.dataAds));
   };
 
-  typeFilter.addEventListener(`change`, function () {
-    window.pin.deletePins();
-    window.pin.renderPins(applyAll(window.dataAds));
-  });
-
-  const hideFormIfError = function () {
-    mapFilters.style.display = `none`;
-  };
-
   const updateFilter = function () {
     window.pin.deletePins();
     window.map.closeCard();
-    window.pin.renderPins(applyAll(window.data));
+    window.pin.renderPins(applyAll(window.dataAds));
+  };
+
+  const hideFormIfError = function () {
+    mapFilters.style.display = `none`;
   };
 
   const getDisable = function () {
@@ -95,8 +90,7 @@
       element.disabled = false;
     });
     filterFormFeaturesElement.disabled = false;
-
-    // mapFilterForm.addEventListener(`change`, window.debounce.shake(updateFilter));
+    mapFilterForm.addEventListener(`change`, window.debounce.shake(updateFilter));
   };
 
   window.filter = {

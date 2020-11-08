@@ -3,7 +3,7 @@
 (function () {
   const INTERVAL_DEBOUNCE = 500;
 
-  const debounce = function (cb) {
+  const shake = function (cb) {
     let lastTimeout = null;
 
     return function (...parameters) {
@@ -18,6 +18,6 @@
   };
 
   window.debounce = {
-    shake: debounce
+    shake: shake
   };
 })();

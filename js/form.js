@@ -187,6 +187,7 @@
       e.preventDefault();
       formAd.querySelector(`.success`).remove();
       document.removeEventListener(`click`, onSuccessPopupClickMouse);
+      document.removeEventListener(`keydown`, onSuccessPopupKeydown);
     }
   };
 
@@ -195,25 +196,10 @@
       e.preventDefault();
       formAd.querySelector(`.success`).remove();
       document.removeEventListener(`keydown`, onSuccessPopupKeydown);
+      document.removeEventListener(`click`, onSuccessPopupClickMouse);
     }
   };
 
-  /*
-  const onErrorPopupClick = function (e) {
-    if (e.button === window.util.LEFT_BUTTON_MOUSE_DOWN) {
-      e.preventDefault();
-      pinsList.querySelector(`.error`).remove();
-      closeButton.removeEventListener(`click`, onErrorPopupClick);
-    }
-  };*/
-  /*
-  const onErrorPopupEscButtonPress = function (evt) {
-    if (evt.key === window.util.ESC_KEY_CODE) {
-      pinsList.querySelector(`.error`).remove();
-      closeButton.removeEventListener(`mouseup`, onErrorPopupClick);
-      document.removeEventListener(`keydown`, onErrorPopupClick);
-    }
-  };*/
 
   // сообщения при отправке формы
 
@@ -240,28 +226,22 @@
         e.preventDefault();
         pinsList.querySelector(`.error`).remove();
         closeButton.removeEventListener(`click`, onErrorPopupClick);
-      }
-    };
-
-    const onErrorPopupEscButtonPress = function (e) {
-      e.preventDefault();
-      if (e.keyCode === window.util.ESC_KEY_CODE) {
-        pinsList.querySelector(`.error`).remove();
+        document.removeEventListener(`click`, onErrorPopupClick);
         document.removeEventListener(`keydown`, onErrorPopupEscButtonPress);
       }
     };
 
-    /* исходный код
-    const onErrorPopupClick = function (evt) {
-      if (evt.button === window.util.LEFT_BUTTON_MOUSE_DOWN || evt.key === window.util.ESC_KEY_CODE) {
+    const onErrorPopupEscButtonPress = function (e) {
+      if (e.keyCode === window.util.ESC_KEY_CODE) {
+        e.preventDefault();
         pinsList.querySelector(`.error`).remove();
-        closeButton.removeEventListener(`mouseup`, onErrorPopupClick);
-        document.removeEventListener(`keydown`, onErrorPopupClick);
+        document.removeEventListener(`keydown`, onErrorPopupEscButtonPress);
+        document.removeEventListener(`click`, onErrorPopupClick);
+        closeButton.removeEventListener(`click`, onErrorPopupClick);
       }
-    };*/
+    };
 
-    const onDataSendAgain = function (evt) {
-      onErrorPopupClick(evt);
+    const onDataSendAgain = function () {
       errorButton.removeEventListener(`click`, onDataSendAgain);
     };
 
@@ -272,6 +252,7 @@
     closeButton.textContent = `Закрыть`;
 
     closeButton.addEventListener(`click`, onErrorPopupClick);
+    document.addEventListener(`click`, onErrorPopupClick);
     document.addEventListener(`keydown`, onErrorPopupEscButtonPress);
 
     errorPopup.appendChild(closeButton);
