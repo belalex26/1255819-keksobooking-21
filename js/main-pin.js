@@ -65,7 +65,7 @@
       upEvt.preventDefault();
       document.removeEventListener(`mousemove`, onMouseMove);
 
-      if (window.util.isLeftMouseButtonDown) {
+      if (upEvt.button === window.util.LEFT_BUTTON_MOUSE_DOWN) {
         window.main.getActivePages();
         window.map.getActive();
         document.removeEventListener(`mouseup`, onMouseUp);
@@ -76,9 +76,9 @@
     document.addEventListener(`mouseup`, onMouseUp);
   });
 
-  const onMainPinKeyDown = function () {
+  const onMainPinKeyDown = function (e) {
 
-    if (window.util.isEnterPressed) {
+    if (e.keyCode === window.util.ENTER_KEY_CODE) {
       window.main.getActivePages();
       window.map.getActive();
       document.removeEventListener(`keydown`, onMainPinKeyDown);

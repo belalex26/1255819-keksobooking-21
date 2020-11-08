@@ -172,9 +172,6 @@
     formTurnOff(formAdHeader);
     window.filter.getDisable();
     window.pin.getAddress(window.util.PIN_HEIGTH_DISABLE);
-
-    mainPin.addEventListener(`mousedown`, window.util.isLeftMouseButtonDown);
-    mainPin.addEventListener(`keydown`, window.util.isEnterPressed);
   };
 
   const onResetPress = function (evt) {
@@ -182,55 +179,100 @@
     clearForm();
   };
 
-  // обработчик
+  // обработчики
 
-  const onPopupClickSuccess = function () {
-    if (window.util.isLeftMouseButtonDown || window.util.isEscPressed) {
+  const onSuccessPopupClickMouse = function (e) {
+
+    if (e.button === window.util.LEFT_BUTTON_MOUSE_DOWN) {
+      e.preventDefault();
       formAd.querySelector(`.success`).remove();
-      document.removeEventListener(`keydown`, onPopupClickSuccess);
-      document.removeEventListener(`mouseup`, onPopupClickSuccess);
+      document.removeEventListener(`click`, onSuccessPopupClickMouse);
     }
   };
+
+  const onSuccessPopupKeydown = function (e) {
+    if (e.keyCode === window.util.ESC_KEY_CODE) {
+      e.preventDefault();
+      formAd.querySelector(`.success`).remove();
+      document.removeEventListener(`keydown`, onSuccessPopupKeydown);
+    }
+  };
+
+  /*
+  const onErrorPopupClick = function (e) {
+    if (e.button === window.util.LEFT_BUTTON_MOUSE_DOWN) {
+      e.preventDefault();
+      pinsList.querySelector(`.error`).remove();
+      closeButton.removeEventListener(`click`, onErrorPopupClick);
+    }
+  };*/
+  /*
+  const onErrorPopupEscButtonPress = function (evt) {
+    if (evt.key === window.util.ESC_KEY_CODE) {
+      pinsList.querySelector(`.error`).remove();
+      closeButton.removeEventListener(`mouseup`, onErrorPopupClick);
+      document.removeEventListener(`keydown`, onErrorPopupClick);
+    }
+  };*/
 
   // сообщения при отправке формы
 
   const onFormSendSuccess = function () {
     const successPopup = templateSuccessForm.cloneNode(true);
-
-    document.addEventListener(`keydown`, onPopupClickSuccess);
-    document.addEventListener(`mouseup`, onPopupClickSuccess);
-    formAd.appendChild(successPopup);
     clearForm();
+
+    document.addEventListener(`click`, onSuccessPopupClickMouse);
+    formAd.appendChild(successPopup);
     propertyType.removeEventListener(`change`, validateType);
     roomNumberSelect.removeEventListener(`change`, checkRooms);
     formAdReset.removeEventListener(`click`, onResetPress);
     formAd.removeEventListener(`submit`, onFormSubmit);
-  };
 
-  const onErrorPopupClick = function () {
-    if (window.util.isLeftMouseButtonDown || window.util.isEscPressed) {
-      pinsList.querySelector(`.error`).remove();
-      closeButton.removeEventListener(`mouseup`, onErrorPopupClick);
-      document.removeEventListener(`keydown`, onErrorPopupClick);
-    }
+    document.addEventListener(`keydown`, onSuccessPopupKeydown);
   };
 
   const onFormSendError = function (errorMessage) {
     const errorPopup = templateErrorForm.cloneNode(true);
     const errorButton = errorPopup.querySelector(`.error__button`);
+
+    const onErrorPopupClick = function (e) {
+      if (e.button === window.util.LEFT_BUTTON_MOUSE_DOWN) {
+        e.preventDefault();
+        pinsList.querySelector(`.error`).remove();
+        closeButton.removeEventListener(`click`, onErrorPopupClick);
+      }
+    };
+
+    const onErrorPopupEscButtonPress = function (e) {
+      e.preventDefault();
+      if (e.keyCode === window.util.ESC_KEY_CODE) {
+        pinsList.querySelector(`.error`).remove();
+        document.removeEventListener(`keydown`, onErrorPopupEscButtonPress);
+      }
+    };
+
+    /* исходный код
+    const onErrorPopupClick = function (evt) {
+      if (evt.button === window.util.LEFT_BUTTON_MOUSE_DOWN || evt.key === window.util.ESC_KEY_CODE) {
+        pinsList.querySelector(`.error`).remove();
+        closeButton.removeEventListener(`mouseup`, onErrorPopupClick);
+        document.removeEventListener(`keydown`, onErrorPopupClick);
+      }
+    };*/
+
     const onDataSendAgain = function (evt) {
       onErrorPopupClick(evt);
-      errorButton.removeEventListener(`mouseup`, onDataSendAgain);
+      errorButton.removeEventListener(`click`, onDataSendAgain);
     };
 
     errorPopup.querySelector(`.error__message`).textContent = errorMessage;
-    errorButton.addEventListener(`mouseup`, onDataSendAgain);
+    errorButton.addEventListener(`click`, onDataSendAgain);
 
     closeButton.classList.add(`error__button`);
     closeButton.textContent = `Закрыть`;
 
-    closeButton.addEventListener(`mouseup`, onErrorPopupClick);
-    document.addEventListener(`keydown`, onErrorPopupClick);
+    closeButton.addEventListener(`click`, onErrorPopupClick);
+    document.addEventListener(`keydown`, onErrorPopupEscButtonPress);
 
     errorPopup.appendChild(closeButton);
     pinsList.appendChild(errorPopup);
