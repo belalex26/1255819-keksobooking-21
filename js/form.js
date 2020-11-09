@@ -192,7 +192,7 @@ const createPreview = function () {
 
 const clearImageUser = function () {
   imageUserBlock.innerHTML = ``;
-  imageUserBlock.append(createPreview());
+  imageUserBlock.appendChild(createPreview());
 };
 
 titleAd.addEventListener(`input`, function () {
