@@ -4,13 +4,12 @@
   const map = document.querySelector(`.map`);
   const pinsList = document.querySelector(`.map__pins`);
   const mainPin = map.querySelector(`.map__pin--main`);
-  const leftButtonMouseDown = 0;
 
   const POSITION_MIN_X = 0 - window.util.PIN_WIDTH / 2;
-  const POSITION_MIN_Y = 79 - window.util.PIN_HEIGTH_DISABLE;
+  const POSITION_MIN_Y = 121 - window.util.PIN_HEIGTH_DISABLE;
 
   const POSITION_MAX_X = pinsList.clientWidth - Math.floor(window.util.PIN_WIDTH / 2);
-  const POSITION_MAX_Y = 579 - window.util.PIN_HEIGTH_DISABLE;
+  const POSITION_MAX_Y = 621 - window.util.PIN_HEIGTH_DISABLE;
 
   mainPin.addEventListener(`mousedown`, function (evt) {
     evt.preventDefault();
@@ -66,7 +65,7 @@
       upEvt.preventDefault();
       document.removeEventListener(`mousemove`, onMouseMove);
 
-      if (evt.button === leftButtonMouseDown) {
+      if (upEvt.button === window.util.LEFT_BUTTON_MOUSE_DOWN) {
         window.main.getActivePages();
         window.map.getActive();
         document.removeEventListener(`mouseup`, onMouseUp);
@@ -77,9 +76,9 @@
     document.addEventListener(`mouseup`, onMouseUp);
   });
 
-  const onMainPinKeyDown = function (evt) {
+  const onMainPinKeyDown = function (e) {
 
-    if (evt.key === `Enter`) {
+    if (e.keyCode === window.util.ENTER_KEY_CODE) {
       window.main.getActivePages();
       window.map.getActive();
       document.removeEventListener(`keydown`, onMainPinKeyDown);

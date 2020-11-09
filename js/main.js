@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  const mainForm = document.querySelector(`.ad-form`);
 
   // блок с ошибкой
 
@@ -17,6 +16,9 @@
     document.body.insertAdjacentElement(`afterbegin`, element);
   };
 
+  // сообщения при отправке формы
+
+
   // создание метки
   const onLoadSuccess = function (ads) {
     window.filter.loadData(ads);
@@ -28,9 +30,9 @@
   };
 
   const getActivePages = function () {
-    mainForm.classList.remove(`ad-form--disabled`);
     window.pin.getAddress(window.util.PIN_HEIGTH_ACTIVE);
-    window.form.turnOn();
+    window.form.getActive();
+    // window.filter.getActive();
     window.backend.load(onLoadSuccess, onLoadError);
 
   };
@@ -38,6 +40,7 @@
   getDisablePages();
 
   window.main = {
+    onLoadError: onLoadError,
     getActivePages: getActivePages
   };
 

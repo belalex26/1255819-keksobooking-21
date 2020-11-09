@@ -7,7 +7,7 @@
   };
   const TIMEOUT_IN_MS = 10000;
 
-  const getload = function (onSuccess, onError) {
+  const load = function (onSuccess, onError) {
     const xhr = new XMLHttpRequest();
     xhr.responseType = `json`;
 
@@ -28,17 +28,17 @@
       window.filter.hideFormIfError();
     });
 
-
     xhr.timeout = TIMEOUT_IN_MS;
 
     xhr.open(`GET`, URL_DOWNLOAD);
     xhr.send();
   };
-  const save = function (data, onSuccess, onError) {
+
+  const upload = function (data, onSuccess, onError) {
     const xhr = new XMLHttpRequest();
     xhr.responseType = `json`;
 
-    xhr.addEventListener(`load`, () => {
+    xhr.addEventListener(`load`, function () {
       switch (xhr.status) {
         case 200:
           onSuccess(xhr.response);
@@ -60,22 +60,12 @@
       }
     });
 
-    xhr.addEventListener(`error`, function () {
-      onError(`Произошла ошибка соединения`);
-    });
-
-    xhr.addEventListener(`timeout`, function () {
-      onError(`Запрос не успел выполниться за ` + xhr.timeout + `мс`);
-    });
-
-    xhr.timeout = TIMEOUT_IN_MS;
-
     xhr.open(`POST`, URL_UPLOAD);
     xhr.send(data);
   };
 
   window.backend = {
-    load: getload,
-    save: save
+    load: load,
+    upload: upload
   };
 })();
