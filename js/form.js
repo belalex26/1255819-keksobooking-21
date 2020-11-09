@@ -316,8 +316,6 @@ const getActive = function () {
   map.classList.remove(`map--faded`);
   formAd.classList.remove(`ad-form--disabled`);
   formTurnOn();
-  // imageUser.innerHTML = ``;
-  // imageHousing.innerHTML = ``;
   window.filter.getActive();
   formAd.addEventListener(`submit`, onFormSubmit);
   formAdReset.addEventListener(`click`, onResetPress);
