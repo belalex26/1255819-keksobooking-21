@@ -256,6 +256,8 @@ const onSuccessPopupKeydown = function (e) {
 const onFormSendSuccess = function () {
   const successPopup = templateSuccessForm.cloneNode(true);
   clearForm();
+  inputUser.removeEventListener(`change`, onUserImageLoad);
+  inputImage.removeEventListener(`change`, onPhotoHousingLoad);
   document.addEventListener(`click`, onSuccessPopupClickMouse);
   formAd.appendChild(successPopup);
   propertyType.removeEventListener(`change`, validateType);
