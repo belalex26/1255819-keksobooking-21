@@ -1,47 +1,38 @@
 'use strict';
 
-(function () {
+// блок с ошибкой
 
-  // блок с ошибкой
+const onLoadError = function (errorMessage) {
+  const element = document.createElement(`div`);
 
-  const onLoadError = function (errorMessage) {
-    const element = document.createElement(`div`);
+  element.style.left = 0;
+  element.style.right = 0;
+  element.style.position = `absolute`;
+  element.style = `text-align: center; z-index: 300; margin: 0 auto; background-color: #cc0605; color: #ffffff`;
+  element.style.fontSize = `28px`;
+  element.textContent = errorMessage;
+  document.body.insertAdjacentElement(`afterbegin`, element);
+};
 
-    element.style.left = 0;
-    element.style.right = 0;
-    element.style.position = `absolute`;
-    element.style = `text-align: center; z-index: 300; margin: 0 auto; background-color: #cc0605; color: #ffffff`;
-    element.style.fontSize = `28px`;
-    element.textContent = errorMessage;
-    document.body.insertAdjacentElement(`afterbegin`, element);
-  };
+// создание метки
+const onLoadSuccess = function (ads) {
+  window.filter.loadData(ads);
+};
 
-  // сообщения при отправке формы
+const getDisablePages = function () {
+  window.pin.getAddress(window.util.PIN_HEIGTH_DISABLE);
+  window.form.turnOff();
+};
 
+const getActivePages = function () {
+  window.pin.getAddress(window.util.PIN_HEIGTH_ACTIVE);
+  window.form.getActive();
+  window.backend.load(onLoadSuccess, onLoadError);
+};
 
-  // создание метки
-  const onLoadSuccess = function (ads) {
-    window.filter.loadData(ads);
-  };
+getDisablePages();
 
-  const getDisablePages = function () {
-    window.pin.getAddress(window.util.PIN_HEIGTH_DISABLE);
-    window.form.turnOff();
-  };
-
-  const getActivePages = function () {
-    window.pin.getAddress(window.util.PIN_HEIGTH_ACTIVE);
-    window.form.getActive();
-    // window.filter.getActive();
-    window.backend.load(onLoadSuccess, onLoadError);
-
-  };
-
-  getDisablePages();
-
-  window.main = {
-    onLoadError: onLoadError,
-    getActivePages: getActivePages
-  };
-
-})();
+window.main = {
+  onLoadError: onLoadError,
+  getActivePages: getActivePages
+};
