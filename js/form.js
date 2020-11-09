@@ -21,10 +21,8 @@ const templateSuccessForm = document.querySelector(`#success`).content.querySele
 const templateErrorForm = document.querySelector(`#error`).content.querySelector(`.error`);
 const pinsList = document.querySelector(`.map__pins`);
 const closeButton = document.createElement(`button`);
-
 const pinMainPositionLeft = mainPin.style.left;
 const pinMainPositionTop = mainPin.style.top;
-
 const imageUser = formAd.querySelector(`.ad-form-header__preview img`);
 const inputUser = formAd.querySelector(`.ad-form-header__input`);
 const inputImage = formAd.querySelector(`.ad-form__input`);
@@ -258,7 +256,6 @@ const onFormSendSuccess = function () {
 
   inputUser.removeEventListener(`change`, onUserImageLoad);
   inputImage.removeEventListener(`change`, onPhotoHousingLoad);
-
   document.addEventListener(`click`, onSuccessPopupClickMouse);
   formAd.appendChild(successPopup);
   propertyType.removeEventListener(`change`, validateType);
@@ -299,14 +296,11 @@ const onFormSendError = function (errorMessage) {
 
   errorPopup.querySelector(`.error__message`).textContent = errorMessage;
   errorButton.addEventListener(`click`, onDataSendAgain);
-
   closeButton.classList.add(`error__button`);
   closeButton.textContent = `Закрыть`;
-
   closeButton.addEventListener(`click`, onErrorPopupClick);
   document.addEventListener(`click`, onErrorPopupClick);
   document.addEventListener(`keydown`, onErrorPopupEscButtonPress);
-
   errorPopup.appendChild(closeButton);
   pinsList.appendChild(errorPopup);
 };
