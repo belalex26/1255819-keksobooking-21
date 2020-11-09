@@ -25,7 +25,6 @@ const closeButton = document.createElement(`button`);
 const pinMainPositionLeft = mainPin.style.left;
 const pinMainPositionTop = mainPin.style.top;
 
-const imageUserBlock = formAd.querySelector(`.ad-form-header__preview`);
 const imageUser = formAd.querySelector(`.ad-form-header__preview img`);
 const inputUser = formAd.querySelector(`.ad-form-header__input`);
 const inputImage = formAd.querySelector(`.ad-form__input`);
@@ -177,24 +176,6 @@ const getNewPhoto = function (evt) {
   return file;
 };
 
-inputUser.addEventListener(`change`, onUserImageLoad);
-inputImage.addEventListener(`change`, onPhotoHousingLoad);
-
-const createPreview = function () {
-  const imagesPrevue = document.createElement(`img`);
-  imagesPrevue.setAttribute(`height`, `44%`);
-  imagesPrevue.setAttribute(`width`, `40`);
-  imagesPrevue.setAttribute(`src`, `img/muffin-grey.svg`);
-  imagesPrevue.setAttribute(`alt`, `аватар пользователя`);
-
-  return imagesPrevue;
-};
-
-const clearImageUser = function () {
-  imageUserBlock.innerHTML = ``;
-  imageUserBlock.appendChild(createPreview());
-};
-
 titleAd.addEventListener(`input`, function () {
   validateTitle();
 });
@@ -232,7 +213,7 @@ const clearForm = function () {
   map.classList.add(`map--faded`);
   formAd.classList.add(`ad-form--disabled`);
   formAd.reset();
-  clearImageUser();
+  imageUser.setAttribute(`src`, `img/muffin-grey.svg`);
   imageHousing.innerHTML = ``;
   window.pin.deletePins();
   window.map.closeCard();
@@ -274,8 +255,10 @@ const onSuccessPopupKeydown = function (e) {
 const onFormSendSuccess = function () {
   const successPopup = templateSuccessForm.cloneNode(true);
   clearForm();
+
   inputUser.removeEventListener(`change`, onUserImageLoad);
   inputImage.removeEventListener(`change`, onPhotoHousingLoad);
+
   document.addEventListener(`click`, onSuccessPopupClickMouse);
   formAd.appendChild(successPopup);
   propertyType.removeEventListener(`change`, validateType);
@@ -333,10 +316,15 @@ const getActive = function () {
   map.classList.remove(`map--faded`);
   formAd.classList.remove(`ad-form--disabled`);
   formTurnOn();
+  // imageUser.innerHTML = ``;
+  // imageHousing.innerHTML = ``;
   window.filter.getActive();
   formAd.addEventListener(`submit`, onFormSubmit);
   formAdReset.addEventListener(`click`, onResetPress);
   validateType();
+
+  inputUser.addEventListener(`change`, onUserImageLoad);
+  inputImage.addEventListener(`change`, onPhotoHousingLoad);
 };
 
 // отправка формы
