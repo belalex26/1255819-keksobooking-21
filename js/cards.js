@@ -10,6 +10,17 @@
     bungalow: `Бунгало`,
   };
 
+  const rooms = {
+    ZERO: 0,
+    ONE: 1,
+    FIVE: 5,
+  };
+
+  const guests = {
+    ZERO: 0,
+    ONE: 1,
+  };
+
   const checkElementForData = function (content, element) {
     if (!content) {
       element.style.display = `none`;
@@ -18,22 +29,22 @@
 
   const verifyQuantityRoomsGuests = (container, dataRooms, dataGuests) => {
     container.textContent = dataRooms + ` комнаты для ` + dataGuests + ` гостей`;
-    if (dataRooms === 1 && dataGuests === 1) {
+    if (dataRooms === rooms.ONE && dataGuests === guests.ONE) {
       container.textContent = dataRooms + ` комната для ` + dataGuests + ` гостя`;
-    } else if (dataRooms === 1) {
+    } else if (dataRooms === rooms.ONE) {
       container.textContent = dataRooms + ` комната для ` + dataGuests + ` гостей`;
-    } else if (dataRooms === 5 && dataGuests === 1) {
+    } else if (dataRooms === rooms.FIVE && dataGuests === guests.ONE) {
       container.textContent = dataRooms + ` комнат для ` + dataGuests + ` гостя`;
-    } else if (dataRooms === 5) {
+    } else if (dataRooms === rooms.FIVE) {
       container.textContent = dataRooms + ` комнат для ` + dataGuests + ` гостей`;
-    } else if (dataRooms === 0 && dataGuests === 0) {
+    } else if (dataRooms === rooms.ZERO && dataGuests === guests.ZERO) {
       container.textContent = dataRooms + ` комнат для ` + dataGuests + ` гостей`;
     }
   };
 
   const renderPhotos = function (container, data) {
     container.innerHTML = ``;
-    data.forEach((src) => {
+    data.forEach(function (src) {
       const photoCreateElement = document.createElement(`img`);
       photoCreateElement.classList.add(`popup__photo`);
       photoCreateElement.setAttribute(`width`, `45`);

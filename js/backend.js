@@ -3,7 +3,11 @@
   const URL_DOWNLOAD = `https://21.javascript.pages.academy/keksobooking/data`;
   const URL_UPLOAD = `https://21.javascript.pages.academy/keksobooking`;
   const StatusCode = {
-    OK: 200
+    OK: 200,
+    BAD_REQUEST: 400,
+    UNAUTHORIZED: 401,
+    NOT_FOUND: 404,
+    INTERNAL_SERVER_ERROR: 500
   };
   const TIMEOUT_IN_MS = 10000;
 
@@ -40,19 +44,19 @@
 
     xhr.addEventListener(`load`, function () {
       switch (xhr.status) {
-        case 200:
+        case StatusCode.OK:
           onSuccess(xhr.response);
           break;
-        case 400:
+        case StatusCode.BAD_REQUEST:
           onError(`Произошла ошибка сервера: неверный запрос`);
           break;
-        case 401:
+        case StatusCode.UNAUTHORIZED:
           onError(`Произошла ошибка сервера: пользователь не авторизован`);
           break;
-        case 404:
+        case StatusCode.NOT_FOUND:
           onError(`Произошла ошибка сервера: запрашиваемый ресурс не найден`);
           break;
-        case 500:
+        case StatusCode.INTERNAL_SERVER_ERROR:
           onError(`Произошла внутренняя ошибка сервера`);
           break;
         default:
