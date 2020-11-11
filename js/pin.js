@@ -11,7 +11,7 @@ const createPin = function (template, content) {
   pinItem.style.left = content.location.x - (window.util.PIN_WIDTH / 2) + `px`;
   pinItem.style.top = content.location.y - (window.util.PIN_HEIGTH_ACTIVE) + `px`;
 
-  pinItem.addEventListener(`click`, function (evt) {
+  pinItem.addEventListener(`mousedown`, function (evt) {
     evt.preventDefault();
     window.map.renderCard(content);
   });
@@ -26,7 +26,6 @@ const renderPins = function (pins) {
     fragment.appendChild(createPin(pinTemplate, pin));
   });
   mapPinsBlock.appendChild(fragment);
-  document.removeEventListener(`click`, createPin);
 };
 
 const getAddress = function (pinHeight) {
@@ -47,5 +46,5 @@ const deletePins = function () {
 window.pin = {
   renderPins: renderPins,
   getAddress: getAddress,
-  deletePins: deletePins
+  deletePins: deletePins,
 };

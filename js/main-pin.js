@@ -62,11 +62,10 @@ mainPin.addEventListener(`mousedown`, function (evt) {
 
   const onMouseUp = function (upEvt) {
     upEvt.preventDefault();
-    document.removeEventListener(`mousemove`, onMouseMove);
-
     if (upEvt.button === window.util.LEFT_BUTTON_MOUSE_DOWN) {
       window.main.getActivePages();
       window.map.getActive();
+      document.removeEventListener(`mousemove`, onMouseMove);
       document.removeEventListener(`mouseup`, onMouseUp);
     }
   };
